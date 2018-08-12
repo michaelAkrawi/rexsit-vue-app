@@ -1,0 +1,27 @@
+
+export function loadFbSdk(appId, version, callback) {
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId,
+            xfbml: false,
+            version,
+            cookie: true
+        });
+        FB.AppEvents.logPageView();
+        callback();
+    };
+    (function (d, s, id) {
+        const fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        const js = d.createElement(s); js.id = id;
+        js.src = '//connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+}
+
+export function getFBLoginStatus(callback) {
+    FB.getLoginStatus(function (response) {
+        callback(response);
+    });
+}
