@@ -25,3 +25,16 @@ export function getFBLoginStatus(callback) {
         callback(response);
     });
 }
+
+export function fbLogin(options) {
+    return new Promise(resolve => {
+        window.FB.login(response => resolve(response), options);
+    });
+}
+
+export function getFBProfilePicture(userID) {
+    return new Promise(resolve => {
+        window.FB.api(`/${userID}/picture`, 'GET', { redirect: false }, response => resolve(response));
+
+    });
+}

@@ -6,7 +6,7 @@
                {{ $t("signup.register")}}
            </h2>
        </div>                  
-        <div id="facebook-button" >
+        <div id="facebook-button" @click="signWithFacebook">
                 <span> {{ $t("signup.facebook") }} </span>
                 <i class="fab fa-facebook"></i>
         </div>       
@@ -34,6 +34,8 @@
             <div>
               <button class="btn btn-primary btn-block"> {{ $t("signup.register")}}</button>
             </div>
+
+            <img v-bind:src="profileImageURL">
        </form>
        
     </div>
@@ -43,17 +45,51 @@
 </template>
 
 <script>
-import { loadFbSdk, getFBLoginStatus } from "../scripts/facebook.js";
-
+import {
+  loadFbSdk,
+  getFBLoginStatus,
+  fbLogin,
+  getFBProfilePicture
+} from "../scripts/facebook.js";
 
 export default {
   name: "app",
-  mounted: function() {
-    loadFbSdk("211055006431121", "v3.1", function() {
-      getFBLoginStatus(function(response) {
-        console.log(response);
+  data: function() {
+    return {
+      profileImageURL: ""
+    };
+  },
+  methods: {
+    signWithFacebook: function() {
+      getFBLoginStatus(response => {
+        if (response.status == "not_authorized") {
+          fbLogin().then(response => {
+            if (response.status == "connected") {
+              setfbProfilePicture(response.userID);
+            } else {
+              console.log("user cancelled facebook login");
+            }
+          });
+        } else if (response.status == "unknown") {
+        } else if (response.status == "connected") {
+          this.setfbProfilePicture(response.authResponse.userID);
+          this.$router.push({ path: "/profile/123" });
+        }
       });
-    });
+    },
+
+    setfbProfilePicture: function(userID) {
+      getFBProfilePicture(userID)
+        .then(response => {
+          this.profileImageURL = response.data.url;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  },
+  mounted: function() {
+    loadFbSdk("211055006431121", "v3.1", function() {});
   }
 };
 </script>
