@@ -1,12 +1,13 @@
 <template>
     <div>
-       This is profile component
+       {{id}}
     </div>
 </template>
 
 
 <script>
 export default {
-    name: "app"
-}
+  name: "app",
+  props: ["id"]
+};
 </script>

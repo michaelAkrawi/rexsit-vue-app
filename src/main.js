@@ -24,7 +24,7 @@ const i18n = new VueI18n({
 const routes = [
   { path: '/', component: Home },
   { path: '/SignUp', component: SignUp },
-  { path: '/profile', component: Profile }
+  { path: '/profile/:id', component: Profile, props : true }
 
 ];
 

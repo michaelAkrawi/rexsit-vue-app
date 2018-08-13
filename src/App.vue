@@ -1,8 +1,23 @@
 <template >
-  <div id="app" class="container" dir="rtl">
-    <router-link v-bind:to="'/'">Home</router-link>
-    <router-link v-bind:to="'/Signup'">Signup</router-link>
-    <router-view></router-view>
+  <div id="app"  dir="rtl">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+       <a class="navbar-brand" href="#">Rexsit</a>
+   
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+   
+    <div class="collapse navbar-collapse navbar-left" id="navbarNav">
+      <ul class="navbar-nav">
+      <li class="nav-item active">
+        <router-link id="btn-sign-up" v-bind:to="'/Signup'">{{$t("signup.register")}}</router-link>
+      </li>
+      </ul>
+    </div>
+    </nav>
+    <div class="container">
+        <router-view></router-view>
+    </div>
 <p>
 
     
@@ -32,5 +47,18 @@ body {
 .btn-primary:hover {
   background-color: #00c4a7;
   border-color: transparent;
+}
+
+#btn-sign-up {
+  text-decoration: none;
+  color: #333 !important;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.navbar-left {
+  float: left;
+  margin-left: 15px;
+  direction: ltr;
 }
 </style>
