@@ -1,6 +1,6 @@
 <template >
   <div id="app"  dir="rtl">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg">
        <a class="navbar-brand" href="#">Rexsit</a>
    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,11 +8,11 @@
     </button>
    
     <div class="collapse navbar-collapse navbar-left" id="navbarNav">
-      <ul class="navbar-nav">
-      <li class="nav-item active">
-        <router-link id="btn-sign-up" v-bind:to="'/Signup'">{{$t("signup.register")}}</router-link>
-      </li>
-      </ul>
+      <div class="navbar-nav">          
+            <router-link class="nav-item nav-link" v-bind:to="'/sign-up'">{{$t("signup.register")}}</router-link>                            
+            <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("user.login")}} </router-link>          
+      </div>
+      
     </div>
     </nav>
     <div class="container">
@@ -49,16 +49,36 @@ body {
   border-color: transparent;
 }
 
-#btn-sign-up {
+.navbar-nav {
+  direction: rtl;
+}
+
+.navbar-nav a {
   text-decoration: none;
   color: #333 !important;
   font-weight: 600;
   font-size: 16px;
+
+  padding: 0px 0px 0px 5px;
+}
+
+.navbar-nav a:first-child {
+  border-left: 2px solid #333;
+}
+
+.navbar {
+  background-color: #fff;
+  border-color: #e7e7e7;
+  box-shadow: 0 0 10px grey;
 }
 
 .navbar-left {
   float: left;
   margin-left: 15px;
   direction: ltr;
+}
+
+.container {
+  margin-top: 15px;
 }
 </style>
