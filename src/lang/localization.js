@@ -1,7 +1,7 @@
 const messages = {
     he: {
       signup: {
-        facebook: 'הרשמה באמצעות פייסבוק',
+        facebook: 'באמצעות פייסבוק',
         or : '- או -',
         register : 'הרשמה'
       }, 
@@ -9,9 +9,10 @@ const messages = {
         email : 'דוא\"ל',
         password: "סיסמא",
         firstname : 'שם פרטי',
-        lastname : 'שם משפחה'
-        
+        lastname : 'שם משפחה',
+        login : 'כניסה'                 
       }
+    
     }
   }
 export default messages 
