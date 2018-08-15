@@ -9,10 +9,9 @@
    
     <div class="collapse navbar-collapse navbar-left" id="navbarNav">
       <div class="navbar-nav">          
-            <router-link class="nav-item nav-link" v-bind:to="'/sign-up'">{{$t("signup.register")}}</router-link>                            
-            <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("user.login")}} </router-link>          
-      </div>
-      
+            <router-link class="nav-item nav-link" v-bind:to="'/sign-up'">{{$t("register")}}</router-link>                            
+            <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("login")}} </router-link>          
+      </div>      
     </div>
     </nav>
     <div class="container">

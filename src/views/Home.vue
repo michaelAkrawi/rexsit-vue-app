@@ -1,13 +1,21 @@
 <template>
 <div>
- This is Home view
+   <search-bar></search-bar>
+   
 </div>
 
 </template>
 
 <script>
+
+
+import SearchBar from '../components/SearchBar.vue'
+
 export default {
-    name : 'app'
+    name : 'app', 
+    components : {
+        "search-bar" : SearchBar
+    }
 }
 
 

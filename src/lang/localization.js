@@ -1,19 +1,20 @@
 const messages = {
     he: {
-      signup: {
+
         facebook: 'באמצעות פייסבוק',
-        or : '- או -',
-        register : 'הרשמה'
-      }, 
-      user :{
-        email : 'דוא\"ל',
+        or: '- או -',
+        register: 'הרשמה',            
+        email: 'דוא\"ל',
         password: "סיסמא",
-        firstname : 'שם פרטי',
-        lastname : 'שם משפחה',
-        login : 'כניסה'                 
-      }
-    
+        firstname: 'שם פרטי',
+        lastname: 'שם משפחה',
+        login: 'כניסה',                         
+        dogwallker: 'דוגווקר',
+        dogsitter: 'דוגיסיטר',
+        services: 'שירותים'
     }
-  }
-export default messages 
+
+}
+
+export default messages
 
