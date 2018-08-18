@@ -11,7 +11,8 @@ const messages = {
         login: 'כניסה',                         
         dogwallker: 'דוגווקר',
         dogsitter: 'דוגיסיטר',
-        services: 'שירותים'
+        services: 'שירותים', 
+        location: 'מיקום'
     }
 
 }

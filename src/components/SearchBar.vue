@@ -2,7 +2,7 @@
     <div >
       <div class="row">
           <div class="col-6">                
-            <input type="text" />
+            <city-auto-complete class="location-text" ></city-auto-complete>
           </div>            
           <div class="col-3">
               <b-dropdown id="ddown-services" :text=getServicesDropDownText()>
@@ -16,12 +16,15 @@
 </template>
 
 <script>
+
 import DropDownImageItemVue from "../components/DropDownImageItem.vue";
+import CityAutoComplete from '../components/CityAutoComplete.vue';
 
 export default {
   name: "search-bar",
   components: { 
-      "dropdown-image-item": DropDownImageItemVue 
+      "dropdown-image-item": DropDownImageItemVue ,
+      "city-auto-complete" : CityAutoComplete
       },
       methods:{
           getServicesDropDownText () {
@@ -35,6 +38,19 @@ export default {
 .dropdown-menu{
     right: 0px !important;
     text-align: right !important;
+}
+
+.row{
+    text-align: right;
+}
+
+.location-text{
+    width: 100%;
+    height: 60px;
+    border-color: transparent;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+
 }
 </style>
 

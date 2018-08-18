@@ -40,6 +40,7 @@ export default {
 {
   color: #fff;
   background-color: #00d1b2;
+  outline: none;
   
 }
 
