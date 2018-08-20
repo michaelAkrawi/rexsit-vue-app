@@ -1,9 +1,18 @@
 <template>
     <div>
-        <div>
+        <div class="city-search-container">
+          <span>
+            <i class="fas fa-map-marker-alt"></i>
+          </span>
           <input type="text" v-model="inputText" v-on:change="getCity">
-        </div>
-        <p  v-for="c in cities">{{c.Name}}</p>
+        </div>  
+
+        <ul id="city-search-results">
+          <li v-for="c in cities">
+            <a @click="setSelectedCityText()">{{c.Name}}</a>
+          </li>
+        </ul>                    
+            
     </div>                    
 </template>
 
@@ -38,11 +47,52 @@ export default {
             self.cities = data;
           }
         });
-      }else{
+      } else {
         this.cities = [];
       }
+    },
+
+    setSelectedCityText(){
+      console.log('city');
     }
   }
 };
 </script>
+
+<style>
+.city-search-container span {
+  position: absolute;
+  top: 15px;
+  right: 24px;
+  display: inline-block;
+}
+
+
+
+#city-search-results {
+  position: absolute;
+  margin-top: 15px;
+  list-style-type: none;
+  padding: 0;
+  background-color: #fff;
+  width: 100%;
+  right: 0;
+}
+
+#city-search-results li {  
+  cursor: pointer;
+}
+
+#city-search-results li a{  
+  display: block;
+  padding: 10px;
+}
+
+
+
+#city-search-results li:hover {
+  background-color: #ddd;
+}
+</style>
+
 

@@ -1,22 +1,18 @@
 <template>
     <div >
       <div class="row">
-            <div class="col-6 search-bar-col city-search-container">                            
-                <span>
-                    <i class="fas fa-map-marker-alt"></i>
-                </span>
+            <div class="col-sm-6 search-bar-col">                                            
                 <city-auto-complete></city-auto-complete>
             </div>                               
-            <div class="col-2 search-bar-col search-bar-col-button">
+            <div class="col-sm-2 search-bar-col search-bar-col-button">
                 <b-dropdown id="ddown-services" :text=getServicesDropDownText()>
-                    <dropdown-image-item fa-class="fas fa-paw"> {{$t("dogwallker")}} </dropdown-image-item>                    
-                    <dropdown-image-item fa-class="fas fa-home"> {{$t("dogsitter")}} </dropdown-image-item>                     
+                    <dropdown-image-item v-for="s in services" :fa-class="s.fa" @click="setSelectedService()"> {{s.text}} </dropdown-image-item>                                        
                 </b-dropdown>
             </div>
-            <div class="col-2 search-bar-col">
+            <div class="col-sm-2 search-bar-col">
 
             </div>
-            <div class="col-2 search-bar-col search-bar-col-button">
+            <div class="col-sm-2 search-bar-col search-bar-col-button">
                 <button id="btn-search" class="btn-primary"> {{$t("search")}} </button>
             </div>
         </div>   
@@ -34,16 +30,29 @@ export default {
     "dropdown-image-item": DropDownImageItemVue,
     "city-auto-complete": CityAutoComplete
   },
+  data: function() {
+    return {
+      services: [
+        { text: this.$t("dogwallker"), fa: "fas fa-paw" },
+        { text: this.$t("dogsitter"), fa: "fas fa-home" }
+      ]
+    };
+  },
   methods: {
     getServicesDropDownText() {
       return this.$t("services");
+    },
+
+    setSelectedService: function() {
+        window.alert('');
     }
-  }
+  },
+
+  computed: {}
 };
 </script>
 
 <style>
-
 .row {
   text-align: right;
 }
@@ -67,37 +76,37 @@ export default {
   padding-right: 35px;
 }
 
-#ddown-services{
-    width: 100%;
-    height: 100%;
+#ddown-services {
+  width: 100%;
+  height: 100%;
 }
 
-#ddown-services button{
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    color : #333;
+#ddown-services button {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  color: #333;
 }
 
-#ddown-services button:after{
-    position: absolute;
-    top: 22px;
-    left: 10px;
-}
-
-.city-search-container span {
+#ddown-services button:after {
   position: absolute;
-  top: 15px;
-  right: 24px;
-  display: inline-block;
+  top: 22px;
+  left: 10px;
 }
+
+
 
 #btn-search {
   height: 100%;
   width: 100%;
   font-weight: 500;
   font-size: 20px;
+}
+
+.dropdown-menu {
+  right: 0px !important;
+  text-align: right;
 }
 </style>
 
