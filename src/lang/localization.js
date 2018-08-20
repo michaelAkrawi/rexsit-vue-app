@@ -12,7 +12,8 @@ const messages = {
         dogwallker: 'דוגווקר',
         dogsitter: 'דוגיסיטר',
         services: 'שירותים', 
-        location: 'מיקום'
+        location: 'מיקום',
+        search : 'חיפוש'
     }
 
 }

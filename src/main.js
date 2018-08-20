@@ -17,10 +17,9 @@ const messages = require('./lang/localization.js').default;
 var _ = require('lodash');
 
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 Vue.use(VueI18n);
 Vue.use(BootstrapVue);
-
 
 
 const i18n = new VueI18n({

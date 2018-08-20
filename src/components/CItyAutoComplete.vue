@@ -3,13 +3,8 @@
         <div>
           <input type="text" v-model="inputText" v-on:change="getCity">
         </div>
-    <div>
-      <p  v-for="c in cities">{{c.Name}}</p>
-    </div>
-    </div>
-    
-    
-    
+        <p  v-for="c in cities">{{c.Name}}</p>
+    </div>                    
 </template>
 
 <script>
