@@ -9,8 +9,8 @@
                     <dropdown-image-item v-for="s in services" :fa-class="s.fa" @click="setSelectedService()"> {{s.text}} </dropdown-image-item>                                        
                 </b-dropdown>
             </div>
-            <div class="col-sm-2 search-bar-col">
-
+            <div class="col-sm-2 search-bar-col date-picker-col">
+                <date-picker format="dd-MM-yyyy" :language="he" placeholder="תאריך" :clear-button=true :calendar-button=true calendar-button-icon="far fa-calendar-alt"></date-picker>
             </div>
             <div class="col-sm-2 search-bar-col search-bar-col-button">
                 <button id="btn-search" class="btn-primary"> {{$t("search")}} </button>
@@ -23,19 +23,23 @@
 <script>
 import DropDownImageItemVue from "../components/DropDownImageItem.vue";
 import CityAutoComplete from "../components/CityAutoComplete.vue";
+import Datepicker from "vuejs-datepicker";
+import { he } from "vuejs-datepicker/dist/locale";
 
 export default {
   name: "search-bar",
   components: {
     "dropdown-image-item": DropDownImageItemVue,
-    "city-auto-complete": CityAutoComplete
+    "city-auto-complete": CityAutoComplete,
+    "date-picker": Datepicker
   },
   data: function() {
     return {
       services: [
         { text: this.$t("dogwallker"), fa: "fas fa-paw" },
         { text: this.$t("dogsitter"), fa: "fas fa-home" }
-      ]
+      ],
+      he: he
     };
   },
   methods: {
@@ -44,7 +48,7 @@ export default {
     },
 
     setSelectedService: function() {
-        window.alert('');
+      window.alert("");
     }
   },
 
@@ -95,7 +99,9 @@ export default {
   left: 10px;
 }
 
-
+.date-picker-col input[type="text"] {
+  border: transparent !important;
+}
 
 #btn-search {
   height: 100%;

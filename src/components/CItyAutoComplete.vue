@@ -1,36 +1,40 @@
+
 <template>
     <div>
         <div class="city-search-container">
           <span>
             <i class="fas fa-map-marker-alt"></i>
           </span>
-          <input type="text" v-model="inputText" v-on:change="getCity">
+          <input type="text" v-model="inputText" v-on:change="getCity" placeholder="שם העיר">
         </div>  
 
-        <ul id="city-search-results">
+        <ul id="city-search-results" v-show="showSearchResults">
           <li v-for="c in cities">
-            <a @click="setSelectedCityText()">{{c.Name}}</a>
+            <a @click="setSelectedCityText(c.Name)">{{c.Name}}</a>
           </li>
-        </ul>                    
-            
+        </ul>                                
     </div>                    
 </template>
 
 <script>
 import { apihelper } from "../scripts/apihelper.js";
-import Vue from "vue";
 
 export default {
   name: "city-autocomplete",
   data: function() {
     return {
       inputText: "",
-      cities: []
+      cities: [],
+      showSearchResults: false,
+      lastQuery: ""
     };
   },
   watch: {
-    inputText: function(newSearch, oldSearch) {
-      this.debouncedGetCity();
+    inputText: function(newQuery, oldQuery) {
+      if (newQuery !== this.lastQuery) {
+        this.lastQuery = newQuery;
+        this.debouncedGetCity();
+      }
     }
   },
   created: function() {
@@ -39,6 +43,7 @@ export default {
   methods: {
     getCity: function() {
       self = this;
+      self.showSearchResults = true;
       if (this.inputText != "") {
         apihelper.fetchCities(this.inputText, function(error, data) {
           if (error) {
@@ -52,8 +57,10 @@ export default {
       }
     },
 
-    setSelectedCityText(){
-      console.log('city');
+    setSelectedCityText(text) {
+      this.lastQuery = text;
+      this.inputText = text;
+      this.showSearchResults = false;
     }
   }
 };
@@ -67,8 +74,6 @@ export default {
   display: inline-block;
 }
 
-
-
 #city-search-results {
   position: absolute;
   margin-top: 15px;
@@ -79,16 +84,14 @@ export default {
   right: 0;
 }
 
-#city-search-results li {  
+#city-search-results li {
   cursor: pointer;
 }
 
-#city-search-results li a{  
+#city-search-results li a {
   display: block;
   padding: 10px;
 }
-
-
 
 #city-search-results li:hover {
   background-color: #ddd;
