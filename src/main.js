@@ -8,6 +8,8 @@ import Login from  './views/Login.vue'
 import Profile from './views/Profile.vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
+import vSelect from 'vue-select'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
