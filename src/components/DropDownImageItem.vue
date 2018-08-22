@@ -1,17 +1,21 @@
 <template>
-    <div class="dropdown-item-container">
-        
-        <b-dropdown-item> 
+    <div class="dropdown-item-container">        
+        <b-dropdown-item @click="onClick"> 
             <i v-bind:class="faClass"></i>    
             <slot></slot> 
-            </b-dropdown-item>
+        </b-dropdown-item>
     </div>
 </template>
 
 <script>
 export default {
   name: "dropdownn-image-item",
-  props: ["faClass"]
+  props: ["faClass"],
+  methods: {
+    onClick (){
+      this.$emit('onSelectedChanged', 'Hey');
+    }
+  }
 };
 </script>
 

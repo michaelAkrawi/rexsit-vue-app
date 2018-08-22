@@ -41,6 +41,7 @@ body {
   background-color: #00d1b2;
   color: fff;
   border-color: transparent;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
