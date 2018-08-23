@@ -1,22 +1,22 @@
 <template>
     <div class="login-container">
         <h2>
-          {{$t("user.login")}}
+          {{$t("login")}}
         </h2>
         <facebook-login :button-prefix=getFacebookButtonText()></facebook-login>
         <div>
-            <span> {{$t("signup.or")}} </span>
+            <span> {{$t("or")}} </span>
          </div>     
         <div class="form-group">
-            <label for="txb-email"> {{$t("user.email")}} </label>
+            <label for="txb-email"> {{$t("email")}} </label>
             <input type="email" id="txb-email" class="form-control" dir="ltr">
         </div>
         <div class="form-group">
-            <label for="txb-password"> {{$t("user.password")}} </label>
+            <label for="txb-password"> {{$t("password")}} </label>
             <input type="password" id="txb-password" class="form-control">
         </div>
         <div>
-            <button class="btn btn-block btn-primary">{{$t("user.login")}} </button>
+            <button class="btn btn-block btn-primary">{{$t("login")}} </button>
         </div>
     </div>
     
@@ -32,7 +32,7 @@ export default {
   },
   methods:{
       getFacebookButtonText (){
-          return this.$t("user.login")
+          return this.$t("login")
       }
   }
 };

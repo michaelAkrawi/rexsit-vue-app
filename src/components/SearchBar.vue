@@ -46,8 +46,7 @@ export default {
         { label: this.$t("dogwallker"), value: 1, icon: "fas fa-paw" },
         { label: this.$t("dogsitter"), value: 2, icon: "fas fa-home" }
       ],
-      he: he,
-      service: ""
+      he: he      
     };
   },
   methods: {

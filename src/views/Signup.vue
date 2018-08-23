@@ -1,9 +1,9 @@
 <template>         
     <div class="sign-container">                
            <h2>
-               {{ $t("signup.register")}}
+               {{ $t("register")}}
            </h2>       
-        <facebook-login :button-prefix=getFacebooButtonText()></facebook-login>        
+        <facebook-login :button-prefix=text></facebook-login>        
         <div>
             <span> {{$t("or")}} </span>
          </div>         
@@ -43,13 +43,14 @@ export default {
   components: {
     "facebook-login": FacebookLogin
   },
-  computed: {},
-  methods: {
-    getFacebooButtonText: function() {
-      return this.$t("register");
+  data: function(){
+    return {
+      text : this.$t("register")
     }
+  },
+  computed: {},  
   }
-};
+
 </script>
 
 

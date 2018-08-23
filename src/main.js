@@ -4,11 +4,11 @@ import VueRouter from 'vue-router'
 import jQuery from 'Jquery'
 import Home from './views/Home.vue'
 import SignUp from './views/Signup.vue'
-import Login from  './views/Login.vue'
+import Login from './views/Login.vue'
 import Profile from './views/Profile.vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
-import vSelect from 'vue-select'
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -32,8 +32,8 @@ const i18n = new VueI18n({
 const routes = [
   { path: '/', component: Home },
   { path: '/sign-up', component: SignUp },
-  { path: '/login', component : Login},
-  { path: '/profile/:id', component: Profile, props : true }
+  { path: '/login', component: Login },
+  { path: '/profile/:id', component: Profile, props: true }
 
 ];
 
@@ -42,9 +42,23 @@ const router = new VueRouter({
   mode: 'history'
 });
 
+router.beforeEach((to, from, next) => {
+
+  const publicRoutes = ['/sign-up', '/login', '/'];
+  const authRequired = !publicRoutes.includes(to.path);
+  const loggedIn = localStorage.getItem('user-token');
+  if(!loggedIn && authRequired){
+    return next('/login')
+  }
+
+  next();
+
+});
+
 new Vue({
   el: '#app',
   render: h => h(App),
   router,
   i18n
 }).$mount("#app")
+;

@@ -1,6 +1,6 @@
 <template>
     <div id="facebook-button" @click="signWithFacebook">
-                <span>  {{ buttonPrefix + ' ' +  $t("signup.facebook") }} </span>
+                <span>  {{ buttonPrefix + ' ' +  $t("facebook") }} </span>
                 <i class="fab fa-facebook"></i>
     </div>       
 </template>
