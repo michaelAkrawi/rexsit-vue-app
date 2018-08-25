@@ -16,7 +16,7 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -50,16 +50,16 @@ module.exports = {
     noInfo: true,
     overlay: true
   },
-  externals :{
-    config = {
-      apiDomain : 'http://localhost:1942/api'
-    }
+  externals: {
+    config: JSON.stringify({
+      apiUrl: 'http://localhost:1942/api'
+    })
   },
   performance: {
     hints: false
   },
   devtool: '#eval-source-map',
-  
+
 }
 
 if (process.env.NODE_ENV === 'production') {

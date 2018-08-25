@@ -1,5 +1,5 @@
 import axios from "../../node_modules/axios";
-import config from 'config';
+import apiDomain from 'config';
 import { authHeader } from '../scripts/auth.js';
 
 export const userService = {
