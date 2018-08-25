@@ -49,11 +49,6 @@ export default {
       he: he      
     };
   },
-  methods: {
-    setSelectedService() {
-      console.log(text);
-    }
-  },
   mounted: function() {
     this.service = this.$t("services");
   }

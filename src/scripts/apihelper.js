@@ -1,8 +1,10 @@
 import axios from "axios";
+import config from 'config';
+
 export class apihelper {
 
     static fetchCities(query, callback) {       
-        axios.get(`http://localhost:1942/api/city/${query}`)
+        axios.get(`${config.apiDomain}/city/${query}`)
             .then(response => { 
                 callback(null, response.data)
             })
@@ -12,6 +14,8 @@ export class apihelper {
 
 
     }
+
+    
 
 
 }           
