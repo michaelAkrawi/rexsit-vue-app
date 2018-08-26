@@ -1,7 +1,7 @@
 <template >
   <div id="app"  dir="rtl">
     <header :class="{'home' : isHomeView}">
-      <nav class="navbar navbar-expand-lg">        
+      <nav :class="[{ 'navbar-transparent': isHomeView }, 'navbar navbar-expand-lg']">        
         <router-link class="navbar-brand" v-bind:to="'/'">Rexsit</router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -31,16 +31,16 @@ export default {
   name: "app",
   data: function() {
     return {
-      headerClass: ''
+      headerClass: ""
     };
   },
   computed: {
     isHomeView() {
-      return this.$route.path === '/';
+      return this.$route.path === "/";
     }
   },
   created() {
-    this.headerClass = 'header-no-image';
+    this.headerClass = "header-no-image";
   }
 };
 </script>
@@ -69,6 +69,13 @@ header .navbar {
   background-color: #fff;
   border-color: #e7e7e7;
   box-shadow: 0 0 10px grey;
+}
+
+.navbar-transparent {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+
 }
 
 .btn-primary {
