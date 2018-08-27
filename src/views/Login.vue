@@ -3,20 +3,20 @@
         <h2>
           {{$t("login")}}
         </h2>
-        <facebook-login :button-prefix=getFacebookButtonText()></facebook-login>
+        <facebook-login :button-prefix=text></facebook-login>
         <div>
             <span> {{$t("or")}} </span>
          </div>     
         <div class="form-group">
             <label for="txb-email"> {{$t("email")}} </label>
-            <input type="email" id="txb-email" class="form-control" dir="ltr">
+            <input type="email" id="txb-email" class="form-control" dir="ltr" v-model="email">
         </div>
         <div class="form-group">
             <label for="txb-password"> {{$t("password")}} </label>
-            <input type="password" id="txb-password" class="form-control">
+            <input type="password" id="txb-password" class="form-control" v-model="password">
         </div>
         <div>
-            <button class="btn btn-block btn-primary">{{$t("login")}} </button>
+            <button class="btn btn-block btn-primary" @click="">{{$t("login")}} </button>
         </div>
     </div>
     
@@ -24,16 +24,28 @@
 
 <script>
 import FacebookLogin from "../components/FacebookLogin.vue";
+import usersService from "../services/users-service.js";
 
 export default {
   name: "app",
   components: {
     "facebook-login": FacebookLogin
   },
-  methods:{
-      getFacebookButtonText (){
-          return this.$t("login")
-      }
+  data: function() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  computed: {
+    text() {
+      return this.$t("login");
+    }
+  },
+  methods: {
+    login() {
+      usersService.login(this.email, this.password);
+    }
   }
 };
 </script>

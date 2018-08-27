@@ -52,7 +52,7 @@ module.exports = {
   },
   externals: {
     config: JSON.stringify({
-      apiUrl: 'http://localhost:1942/api'
+      apiURL: 'http://localhost:1942/api'
     })
   },
   performance: {

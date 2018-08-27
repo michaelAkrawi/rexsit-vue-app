@@ -1,50 +1,48 @@
 import axios from "../../node_modules/axios";
-import apiDomain from 'config';
+import config from 'config';
 import { authHeader } from '../scripts/auth.js';
 
 export const userService = {
     register,
     login,
-    get,
     getById,
     _delete
 
 }
 
 function login(username, password) {
-    axios.post(`${config.apiDomain}/users/authenticate/`, {
+    axios.post(`${config.apiURL}/authentication/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
+    }).then(response => {
+        if (response.data.token) {
+            localStorage.setItem('user', JSON.stringify(response));
+        }
+        return response;
+    }).catch(error => {
+        console.log(error);
     })
-        .then(response => {
-            if (response.data.token) {
-                localStorage.setItem('user', JSON.stringify(response));
-            }
-
-            return response;
-        })
-        .catch(error => {
-            console.log(error);
-        })
 }
 
-function register(username, password) {
+function register(email, password) {
 
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    };
+    return new Promise((resolve, reject) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
 
-    axios.post(`${config.apiDomain}/users/register`, requestOptions)
-        .then(function (response) {
-            return response;
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        };
 
+        axios.post(`${config.apiURL}/authentication/user/register`, JSON.stringify({ email, password }), requestOptions)
+            .then(function (response) {
+                resolve(response);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            })
+    })
 }
 
 
