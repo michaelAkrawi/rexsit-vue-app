@@ -10,20 +10,20 @@
        <form v-on:submit.prevent>
             <div class="form-group">
                 <label for="txb-firstname"> {{$t("firstname")}} </label>
-                <input type="text" id="txb-firstname" class="form-control">
+                <input type="text" id="txb-firstname" class="form-control" required v-model="User.firstName">
             </div>
             <div>
                 <label for="txb-lastname"> {{$t("lastname")}} </label>
-                <input type="text" id="txb-lastname" class="form-control">
+                <input type="text" id="txb-lastname" class="form-control" required v-model="User.lastName">
             </div>
             
             <div class="form-group">
                 <label for="txb-email"> {{$t("email")}} </label>
-                <input type="email" id="txb-email" class="form-control" dir="ltr" v-model="email" required>
+                <input type="email" id="txb-email" class="form-control" dir="ltr" v-model="User.email" required>
             </div>
              <div class="form-group">
                 <label for="txb-password"> {{$t("password")}} </label>
-                <input type="password" id="txb-password" class="form-control" v-model="password" required>
+                <input type="password" id="txb-password" class="form-control" v-model="User.password" required>
             </div>        
             <div>
               <button class="btn btn-primary btn-block" @click="register()"> {{ $t("register")}}</button>
@@ -37,7 +37,8 @@
 
 <script>
 import FacebookLogin from "../components/FacebookLogin.vue";
-import { userService } from "../services/users-service.js";
+import { userService, User } from "../services/users-service.js";
+const newUser = new User();
 
 export default {
   name: "app",
@@ -45,10 +46,9 @@ export default {
     "facebook-login": FacebookLogin
   },
   data: function() {
-    return {
-      email: "",
-      password: ""
-    };
+    return  {
+      newUser
+    }
   },
   computed: {
     text() {
@@ -56,8 +56,9 @@ export default {
     }
   },
   methods: {
-    register() {      
-      userService.register(this.email, this.password)
+    register() {            
+      debugger;
+      userService.register(this.User)
       .then(reponse => {
         console.log(reponse);
       });      

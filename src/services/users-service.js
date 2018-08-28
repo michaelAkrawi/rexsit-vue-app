@@ -10,6 +10,15 @@ export const userService = {
 
 }
 
+export class User {
+    constructor(firsName, lastName, email, password) {
+        this.firsName = firsName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+}
+
 function login(username, password) {
     axios.post(`${config.apiURL}/authentication/user/login`, {
         method: 'POST',
@@ -25,7 +34,7 @@ function login(username, password) {
     })
 }
 
-function register(email, password) {
+function register(user) {
 
     return new Promise((resolve, reject) => {
         const requestOptions = {
@@ -34,7 +43,7 @@ function register(email, password) {
 
         };
 
-        axios.post(`${config.apiURL}/authentication/user/register`, JSON.stringify({ email, password }), requestOptions)
+        axios.post(`${config.apiURL}/authentication/user/register`, JSON.stringify(user), requestOptions)
             .then(function (response) {
                 resolve(response);
             })
