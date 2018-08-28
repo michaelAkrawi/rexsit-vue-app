@@ -2,7 +2,9 @@
   <div id="app"  dir="rtl">
     <header :class="{'home' : isHomeView}">
       <nav :class="[{ 'navbar-transparent': isHomeView }, 'navbar navbar-expand-lg']">        
-        <router-link class="navbar-brand" v-bind:to="'/'">Rexsit</router-link>
+        <router-link class="navbar-brand" v-bind:to="'/'">          
+          <img src="./assets/Rexsit-03.png">
+        </router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -51,6 +53,13 @@ header {
   height: unset;
 }
 
+.navbar-brand img {
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  top: -30px;
+}
+
 header.home {
   background-image: url("./assets/hero_dog_blur.jpg");
   height: 500px;
@@ -69,13 +78,13 @@ header .navbar {
   background-color: #fff;
   border-color: #e7e7e7;
   box-shadow: 0 0 10px grey;
+  min-height: 65px;
 }
 
 .navbar-transparent {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-
 }
 
 .btn-primary {
