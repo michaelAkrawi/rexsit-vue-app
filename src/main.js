@@ -33,7 +33,7 @@ const routes = [
   { path: '/', component: Home },
   { path: '/sign-up', component: SignUp },
   { path: '/login', component: Login },
-  { path: '/profile/:id', component: Profile, props: true }
+  { path: '/profile/:fullName', component: Profile, props: true }
 
 ];
 
@@ -46,7 +46,7 @@ router.beforeEach((to, from, next) => {
 
   const publicRoutes = ['/sign-up', '/login', '/'];
   const authRequired = !publicRoutes.includes(to.path);
-  const loggedIn = localStorage.getItem('user-token');
+  const loggedIn = localStorage.getItem('user');
   if(!loggedIn && authRequired){
     return next('/login')
   }

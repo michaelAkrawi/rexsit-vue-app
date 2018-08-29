@@ -1,6 +1,6 @@
 <template>
     <div>
-       {{id}}
+       {{fullName}}
     </div>
 </template>
 
@@ -8,6 +8,6 @@
 <script>
 export default {
   name: "app",
-  props: ["id"]
+  props: ["fullName"]
 };
 </script>
