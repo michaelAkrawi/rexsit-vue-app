@@ -10,13 +10,11 @@ export const userService = {
 
 }
 
-export class User {
-    constructor(firsName, lastName, email, password) {
-        this.firsName = firsName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+export const User = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
 }
 
 function login(username, password) {

@@ -10,20 +10,25 @@
        <form v-on:submit.prevent>
             <div class="form-group">
                 <label for="txb-firstname"> {{$t("firstname")}} </label>
-                <input type="text" id="txb-firstname" class="form-control" required v-model="userData.firstName">
+                <input type="text" id="txb-firstname" class="form-control" :class="{'form-control-has-error': validation.hasError('userData.firstName')}" v-model="userData.firstName">
+                <div class="error-message">{{ validation.firstError('userData.firstName') }}</div>
             </div>
             <div class="form-group">
                 <label for="txb-lastname"> {{$t("lastname")}} </label>
-                <input type="text" id="txb-lastname" class="form-control" required v-model="userData.lastName">
+                <input type="text" id="txb-lastname" class="form-control" :class="{'form-control-has-error': validation.hasError('userData.lastName')}"  v-model="userData.lastName">
+                <div class="error-message">{{ validation.firstError('userData.lastName') }}</div>
             </div>
             
             <div class="form-group">
                 <label for="txb-email"> {{$t("email")}} </label>
-                <input type="email" id="txb-email" class="form-control" dir="ltr" v-model="userData.email" required>
+                <input type="text" id="txb-email" name="email" class="form-control" :class="{'form-control-has-error': validation.hasError('userData.email')}" dir="ltr" v-model="userData.email" >
+                <div class="error-message">{{ validation.firstError('userData.email') }}</div>
             </div>
              <div class="form-group">
                 <label for="txb-password"> {{$t("password")}} </label>
-                <input type="password" id="txb-password" class="form-control" v-model="userData.password" required dir="ltr">
+                <input type="password" id="txb-password" class="form-control" :class="{'form-control-has-error': validation.hasError('userData.password')}" v-model="userData.password"  dir="ltr">
+                <div class="error-message">{{ validation.firstError('userData.password') }}</div>
+
             </div>        
             <div>
               <button class="btn btn-primary btn-block" @click="register()"> {{ $t("register")}}</button>
@@ -39,6 +44,8 @@
 import FacebookLogin from "../components/FacebookLogin.vue";
 import { userService, User } from "../services/users-service.js";
 import { storeAuthUser } from "../scripts/auth";
+import SimpleVueValidation from "simple-vue-validator";
+const Validator = SimpleVueValidation.Validator;
 
 export default {
   name: "app",
@@ -47,7 +54,7 @@ export default {
   },
   data: function() {
     return {
-      userData: new User()
+      userData: User
     };
   },
   computed: {
@@ -57,11 +64,38 @@ export default {
   },
   methods: {
     register() {
-      userService.register(this.userData).then(response => {
-        storeAuthUser(response.data);
-        this.$router.push({ path: `profile/${response.data.FirstName}${response.data.LastName}` });
+      this.$validate().then(succ => {
+        if (succ) {
+          userService.register(this.userData).then(response => {
+            storeAuthUser(response.data);
+            this.$router.push({
+              path: `profile/${response.data.FirstName}${
+                response.data.LastName
+              }`
+            });
+          });
+        }
       });
     }
+  },
+  validators: {
+    "userData.firstName": function(value) {
+      return Validator.value(value).required();
+    },
+    "userData.lastName": function(value) {
+      return Validator.value(value).required();
+    },
+    "userData.email": function(value) {
+      return Validator.value(value)
+        .required()
+        .email();
+    },
+    "userData.password": function(value) {
+      return Validator.value(value).required();
+    }
+  },
+  mounted() {
+    console.log(this.fields);
   }
 };
 </script>
@@ -85,5 +119,14 @@ export default {
 
 form {
   margin-top: 15px;
+}
+
+.error-message {
+  color: #a94442;
+}
+
+.form-control-has-error {
+  box-shadow: none;
+  border-color: #a94442;
 }
 </style>
