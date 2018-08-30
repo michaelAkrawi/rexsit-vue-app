@@ -21,15 +21,18 @@
             
             <div class="form-group">
                 <label for="txb-email"> {{$t("email")}} </label>
-                <input type="text" id="txb-email" name="email" class="form-control" :class="{'form-control-has-error': validation.hasError('userData.email')}" dir="ltr" v-model="userData.email" >
-                <div class="error-message">{{ validation.firstError('userData.email') }}</div>
+                <input type="text" id="txb-email" name="email" class="form-control" :class="{'form-control-has-error': emailErrors}" dir="ltr" v-model="userData.email" >
+                <div  class="error-message">{{ validation.firstError('userData.email') }}</div>
+                <div v-if="existed" class="error-message"> {{this.$t("existedUser")}}</div>                
             </div>
              <div class="form-group">
                 <label for="txb-password"> {{$t("password")}} </label>
-                <input type="password" id="txb-password" class="form-control" :class="{'form-control-has-error': validation.hasError('userData.password')}" v-model="userData.password"  dir="ltr">
+                <vue-password  :class="{'password-control-error': validation.hasError('userData.password')}"  v-model="userData.password" > </vue-password>
                 <div class="error-message">{{ validation.firstError('userData.password') }}</div>
-
             </div>        
+            <div class="form-group">
+                
+            </div>
             <div>
               <button class="btn btn-primary btn-block" @click="register()"> {{ $t("register")}}</button>
             </div>            
@@ -45,37 +48,51 @@ import FacebookLogin from "../components/FacebookLogin.vue";
 import { userService, User } from "../services/users-service.js";
 import { storeAuthUser } from "../scripts/auth";
 import SimpleVueValidation from "simple-vue-validator";
+import VuePassword from "vue-password";
 const Validator = SimpleVueValidation.Validator;
 
 export default {
   name: "app",
   components: {
-    "facebook-login": FacebookLogin
+    "facebook-login": FacebookLogin,
+    "vue-password": VuePassword
   },
   data: function() {
     return {
-      userData: User
+      userData: User,
+      existed: false
     };
   },
   computed: {
     text() {
       return this.$t("register");
+    },
+    emailErrors() {
+      return this.validation.hasError("userData.email") || this.existed;
     }
   },
   methods: {
     register() {
       this.$validate().then(succ => {
         if (succ) {
-          userService.register(this.userData).then(response => {
-            storeAuthUser(response.data);
-            this.$router.push({
-              path: `profile/${response.data.FirstName}${
-                response.data.LastName
-              }`
-            });
-          });
+          this.login();
         }
       });
+    },
+    login() {
+      userService
+        .register(this.userData)
+        .then(response => {
+          storeAuthUser(response.data);
+          this.$router.push({
+            path: `profile/${response.data.FirstName}${response.data.LastName}`
+          });
+        })
+        .catch(reject => {
+          if (reject.response.status == "409") {
+            this.existed = true;
+          }
+        });
     }
   },
   validators: {
@@ -93,9 +110,6 @@ export default {
     "userData.password": function(value) {
       return Validator.value(value).required();
     }
-  },
-  mounted() {
-    console.log(this.fields);
   }
 };
 </script>
@@ -128,5 +142,12 @@ form {
 .form-control-has-error {
   box-shadow: none;
   border-color: #a94442;
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+.password-control-error input.form-control {
+  box-shadow: none;
+  border-color: #a94442;
+  -webkit-box-shadow: 0 0 0 30px white inset;
 }
 </style>

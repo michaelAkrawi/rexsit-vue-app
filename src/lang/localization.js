@@ -13,14 +13,19 @@ export const messages = {
         dogsitter: 'דוגיסיטר',
         services: 'שירותים',
         location: 'מיקום',
-        search: 'חיפוש'
+        search: 'חיפוש',
+        existedUser : 'המייל שהוזן נמצא בשימוש במערכת'     
+
+
+
     }
 
 }
 
 export const errors = {
   he:{
-      required : 'שדה חובה'
+      required : 'שדה חובה',
+      email : 'כתובת הדוא\"ל שהוזנה אינה חוקית'
   }
 }
 
