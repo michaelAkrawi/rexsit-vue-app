@@ -14,7 +14,9 @@ export const messages = {
         services: 'שירותים',
         location: 'מיקום',
         search: 'חיפוש',
-        existedUser : 'המייל שהוזן נמצא בשימוש במערכת'     
+        existedUser : 'המייל שהוזן נמצא בשימוש במערכת',
+        city : 'עיר',
+        date : 'תאריך'     
 
 
 
