@@ -32,6 +32,14 @@ export function fbLogin(options) {
     });
 }
 
+export function getFBInfo(userID) {
+    return new Promise(resolve => {
+        window.FB.api(`/${userID}/`, 'GET', { fields: ['first_name', 'last_name', 'email'] }, response => {
+            resolve(response);
+        })
+    })
+}
+
 export function getFBProfilePicture(userID) {
     return new Promise(resolve => {
         window.FB.api(`/${userID}/picture`, 'GET', { redirect: false }, response => resolve(response));

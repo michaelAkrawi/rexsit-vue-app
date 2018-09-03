@@ -1,5 +1,5 @@
 <template>
-    <div id="facebook-button" @click="signWithFacebook">
+    <div id="facebook-button" @click="signWithFacebook" >
                 <span>  {{ buttonPrefix + ' ' +  $t("facebook") }} </span>
                 <i class="fab fa-facebook"></i>
     </div>       
@@ -10,36 +10,53 @@ import {
   loadFbSdk,
   getFBLoginStatus,
   fbLogin,
-  getFBProfilePicture
+  getFBProfilePicture,
+  getFBInfo
 } from "../scripts/facebook.js";
+
+import { userService, User } from "../services/users-service.js";
 
 export default {
   name: "facebook-login",
-  props: ["buttonPrefix"],
+  props: ['buttonPrefix', 'callback'],
   data: function() {
     return {
       profileImageURL: ""
     };
   },
+
   methods: {
     signWithFacebook: function() {
-      getFBLoginStatus(response => {
-        if (response.status == "not_authorized") {
-          fbLogin().then(response => {
-            if (response.status == "connected") {
-              setfbProfilePicture(response.userID);
-            } else {
-              console.log("user cancelled facebook login");
-            }
-          });
-        } else if (response.status == "unknown") {
-        } else if (response.status == "connected") {
-          this.setfbProfilePicture(response.authResponse.userID);
-          this.$router.push({ path: "/profile/123" });
+      self = this;
+      fbLogin().then(response => {
+        if (response.status == "connected") {
+          self.callback(response.authResponse);
         }
       });
     },
+    register: function(userID) {
+      getFBInfo(userID).then(response => {
+        const u = self.getUserData(response);
+        userService
+          .register(u)
+          .then(response => {
+            console.log("connected");
+          })
+          .catch(reject => {
+            console.log(reject);
+          });
+      });
+    },
 
+    getUserData: function(response) {
+      return {
+        firstName: response.first_name,
+        lastName: response.last_name,
+        email: response.email,
+        oAuthProvider: "facebook",
+        oAuthUniqueId: response.id
+      };
+    },
     setfbProfilePicture: function(userID) {
       getFBProfilePicture(userID)
         .then(response => {

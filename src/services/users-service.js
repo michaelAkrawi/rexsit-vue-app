@@ -14,7 +14,9 @@ export const User = {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    oAuthProvider :'',
+    oAuthUniqueId : undefined
 }
 
 function login(username, password) {

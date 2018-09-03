@@ -3,7 +3,7 @@
            <h2>
                {{ $t("register")}}
            </h2>       
-        <facebook-login :button-prefix=text></facebook-login>        
+        <facebook-login :button-prefix=text :callback=facebookRegister></facebook-login>        
         <div>
             <span> {{$t("or")}} </span>
          </div>         
@@ -49,6 +49,7 @@ import { userService, User } from "../services/users-service.js";
 import { storeAuthUser } from "../scripts/auth";
 import SimpleVueValidation from "simple-vue-validator";
 import VuePassword from "vue-password";
+import { getFBInfo } from "../scripts/facebook.js";
 const Validator = SimpleVueValidation.Validator;
 
 export default {
@@ -72,16 +73,39 @@ export default {
     }
   },
   methods: {
+    facebookRegister(response) {
+      getFBInfo(response.userID).then(response => {
+        const u = this.fillDataFromFacebookResponse(response);
+        userService
+          .register(u)
+          .then(response => {
+            console.log("connected");
+          })
+          .catch(reject => {
+            console.log(reject);
+          });
+      });
+    },
+
+    fillDataFromFacebookResponse(response) {
+      return {
+        firstname: response.first_name,
+        lastName: response.last_name,
+        email: response.email,
+        oAuthProvider: "facebook",
+        oAuthUniqueId: response.id
+      };
+    },
     register() {
       this.$validate().then(succ => {
         if (succ) {
-          this.login();
+          this.login(this.userData);
         }
       });
     },
-    login() {
+    login(user) {
       userService
-        .register(this.userData)
+        .register(user)
         .then(response => {
           storeAuthUser(response.data);
           this.$router.push({
