@@ -15,7 +15,10 @@
                 </vue-select>
               </div>
               <div class="col-sm-2 search-bar-col date-picker-col">
-                <date-picker format="dd-MM-yyyy" :language="he" placeholder="תאריך" :clear-button=true :calendar-button=true calendar-button-icon="fas fa-calendar"
+                <span>
+                  <i class="far fa-calendar-alt"></i>
+                </span>
+                <date-picker format="dd-MM-yyyy" :language="he" placeholder="תאריך" :clear-button=true
                  wrapper-class="date-picker-wrapper" calendar-class="date-picker-calendar" ></date-picker>
               </div>
               <div class="col-sm-2 search-bar-col search-bar-col-button">
@@ -51,6 +54,11 @@ export default {
   },
   mounted: function() {
     this.service = this.$t("services");
+  },
+  computed :{
+    datePickerPlaceHolder (){
+      return this.$t("date");
+    }
   }
 };
 </script>
@@ -122,6 +130,12 @@ export default {
   font-size: 16px;
   width: 90%;
   padding-right: 15px;
+}
+
+.date-picker-col > span {
+  position: absolute;
+  display: inline-block;
+  top: 12px;
 }
 
 .date-picker-calendar {
