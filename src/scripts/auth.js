@@ -3,7 +3,6 @@ import { isError } from "util";
 export function authHeader() {
     // return authorization header with jwt token
     let user = JSON.parse(localStorage.getItem('user'));
-
     if (user && user.token) {
         return { 'Authorization': 'Bearer ' + user.token };
     } else {
@@ -11,6 +10,10 @@ export function authHeader() {
     }
 }
 
-export function storeAuthUser(user){
+export function storeAuthUser(user) {
     localStorage.setItem('user', JSON.stringify(user));
+}
+
+export function getAuthUser() {
+    return JSON.parse(localStorage.getItem('user'));
 }

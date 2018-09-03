@@ -16,7 +16,8 @@ export const messages = {
         search: 'חיפוש',
         existedUser : 'המייל שהוזן נמצא בשימוש במערכת',
         city : 'עיר',
-        date : 'תאריך'     
+        date : 'תאריך',
+        alreadyHaveAccount : 'כבר נרשמתי לאתר'    
 
 
 

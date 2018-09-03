@@ -33,39 +33,7 @@ export default {
           self.callback(response.authResponse);
         }
       });
-    },
-    register: function(userID) {
-      getFBInfo(userID).then(response => {
-        const u = self.getUserData(response);
-        userService
-          .register(u)
-          .then(response => {
-            console.log("connected");
-          })
-          .catch(reject => {
-            console.log(reject);
-          });
-      });
-    },
-
-    getUserData: function(response) {
-      return {
-        firstName: response.first_name,
-        lastName: response.last_name,
-        email: response.email,
-        oAuthProvider: "facebook",
-        oAuthUniqueId: response.id
-      };
-    },
-    setfbProfilePicture: function(userID) {
-      getFBProfilePicture(userID)
-        .then(response => {
-          this.profileImageURL = response.data.url;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    }            
   },
   mounted: function() {
     loadFbSdk("211055006431121", "v3.1", function() {});

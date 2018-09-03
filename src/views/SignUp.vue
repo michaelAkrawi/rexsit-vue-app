@@ -29,14 +29,15 @@
                 <label for="txb-password"> {{$t("password")}} </label>
                 <vue-password  :class="{'password-control-error': validation.hasError('userData.password')}"  v-model="userData.password" dir="ltr"> </vue-password>
                 <div class="error-message">{{ validation.firstError('userData.password') }}</div>
-            </div>        
-            <div class="form-group">
-                
-            </div>
+            </div>                    
             <div>
               <button class="btn btn-primary btn-block" @click="register()"> {{ $t("register")}}</button>
             </div>            
        </form>       
+
+       <div class="existing-account">         
+         <router-link v-bind:to="'/login'"> {{this.$t("alreadyHaveAccount")}} </router-link>
+       </div>
     </div>
         
     
@@ -76,14 +77,7 @@ export default {
     facebookRegister(response) {
       getFBInfo(response.userID).then(response => {
         const u = this.fillDataFromFacebookResponse(response);
-        userService
-          .register(u)
-          .then(response => {
-            console.log("connected");
-          })
-          .catch(reject => {
-            console.log(reject);
-          });
+        this.login(u);
       });
     },
 
@@ -109,7 +103,7 @@ export default {
         .then(response => {
           storeAuthUser(response.data);
           this.$router.push({
-            path: `profile/${response.data.FirstName}${response.data.LastName}`
+            path: `/`
           });
         })
         .catch(reject => {
@@ -173,5 +167,11 @@ form {
   box-shadow: none;
   border-color: #a94442;
   -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+.existing-account {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  margin-top: 20px;
 }
 </style>

@@ -24,7 +24,7 @@
 
 <script>
 import FacebookLogin from "../components/FacebookLogin.vue";
-import usersService from "../services/users-service.js";
+import { userService } from "../services/users-service.js";
 
 export default {
   name: "app",
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     login() {
-      usersService.login(this.email, this.password);
+      userService.login(this.email, this.password);
     }
   }
 };

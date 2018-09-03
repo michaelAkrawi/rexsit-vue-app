@@ -14,7 +14,7 @@ export const User = {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
+    passwordText: '',
     oAuthProvider :'',
     oAuthUniqueId : undefined
 }
@@ -40,7 +40,6 @@ function register(user) {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-
         };
 
         axios.post(`${config.apiURL}/authentication/user/register`, JSON.stringify(user), requestOptions)

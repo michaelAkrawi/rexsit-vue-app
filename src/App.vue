@@ -11,38 +11,63 @@
    
         <div class="collapse navbar-collapse navbar-left" id="navbarNav">
           <div class="navbar-nav">          
-            <router-link class="nav-item nav-link" v-bind:to="'/signup'">{{$t("register")}}</router-link>                            
-            <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("login")}} </router-link>          
-          </div>      
-        </div>
+            <div v-if="isLogedIn == false">
+              <router-link class="nav-item nav-link" v-bind:to="'/signup'">{{$t("register")}}</router-link>                            
+              <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("login")}} </router-link>          
+            </div>
+            <div v-else>
+              <div id= "profile-img">
+                <img :src="getProfileImage"/>
+              </div>
+            </div>
+          </div>
+            
+          </div>              
       </nav>
     </header>
             
     <div class="container">
         <router-view></router-view>
     </div>
-<p>
-
-    
-    </p>
   </div>
 </template>
 
 <script>
+import { getAuthUser } from "./scripts/auth.js";
+import { getFBProfilePicture } from "./scripts/facebook.js";
+
 export default {
   name: "app",
   data: function() {
     return {
-      headerClass: ""
+      headerClass: "",
+      loggedUser: undefined
     };
+  },
+  methods: {
+    getProfileImage() {
+      if (loggedUser.oAuthProvider == "facebook") {
+        getFBProfilePicture(user.oAuthUniqueId)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(reject => {
+            console.log(reject);
+          });
+      }
+    }
   },
   computed: {
     isHomeView() {
       return this.$route.path === "/";
+    },
+    isLogedIn() {
+      return this.loggedUser != undefined;
     }
   },
-  created() {
+  mounted() {
     this.headerClass = "header-no-image";
+    this.loggedUser = getAuthUser();
   }
 };
 </script>
