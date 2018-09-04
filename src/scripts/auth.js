@@ -1,4 +1,3 @@
-import { isError } from "util";
 
 export function authHeader() {
     // return authorization header with jwt token
@@ -10,10 +9,7 @@ export function authHeader() {
     }
 }
 
-export function storeAuthUser(user) {
-    localStorage.setItem('user', JSON.stringify(user));
-}
-
 export function getAuthUser() {
     return JSON.parse(localStorage.getItem('user'));
 }
+

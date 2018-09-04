@@ -42,6 +42,7 @@ export function getFBInfo(userID) {
 
 export function getFBProfilePicture(userID) {
     return new Promise(resolve => {
+        debugger;
         window.FB.api(`/${userID}/picture`, 'GET', { redirect: false }, response => resolve(response));
 
     });

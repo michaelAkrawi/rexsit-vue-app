@@ -52,7 +52,8 @@ module.exports = {
   },
   externals: {
     config: JSON.stringify({
-      apiURL: 'http://localhost:1942/api'
+      apiURL: 'http://localhost:1942/api',
+      facebookAppID : '211055006431121'
     })
   },
   performance: {

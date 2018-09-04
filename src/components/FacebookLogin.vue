@@ -6,19 +6,13 @@
 </template>
 
 <script>
-import {
-  loadFbSdk,
-  getFBLoginStatus,
-  fbLogin,
-  getFBProfilePicture,
-  getFBInfo
-} from "../scripts/facebook.js";
+import { fbLogin } from "../scripts/facebook.js";
 
 import { userService, User } from "../services/users-service.js";
 
 export default {
   name: "facebook-login",
-  props: ['buttonPrefix', 'callback'],
+  props: ["buttonPrefix", "callback"],
   data: function() {
     return {
       profileImageURL: ""
@@ -33,10 +27,7 @@ export default {
           self.callback(response.authResponse);
         }
       });
-    }            
-  },
-  mounted: function() {
-    loadFbSdk("211055006431121", "v3.1", function() {});
+    }
   }
 };
 </script>

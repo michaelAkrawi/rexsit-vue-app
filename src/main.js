@@ -8,6 +8,7 @@ import Profile from './views/Profile.vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
 import SimpleVueValidation from 'simple-vue-validator';
+import Vuex from 'vuex';
 
 
 
@@ -20,6 +21,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 
 
+import { store } from './scripts/store.js';
 const messages = require('./lang/localization.js').messages;
 const errors = require('./lang/localization.js').errors;
 var _ = require('lodash');
@@ -30,12 +32,13 @@ Vue.use(VueRouter);
 Vue.use(VueI18n);
 Vue.use(BootstrapVue);
 Vue.use(SimpleVueValidation);
+Vue.use(Vuex);
 
 
 const i18n = new VueI18n({
   locale: 'he',
   messages
-})
+});
 
 const routes = [
   { path: '/', component: Home },
@@ -67,6 +70,6 @@ new Vue({
   el: '#app',
   render: h => h(App),
   router,
-  i18n
+  i18n, 
+  store
 }).$mount("#app")
-  ;

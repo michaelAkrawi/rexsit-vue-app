@@ -17,7 +17,7 @@
             </div>
             <div v-else>
               <div id= "profile-img">
-                <img :src="getProfileImage"/>
+                <img :src="profileImageURL"/>
               </div>
             </div>
           </div>
@@ -30,39 +30,42 @@
 
 <script>
 import { getAuthUser } from "../scripts/auth.js";
+import { getFBProfilePicture } from "../scripts/facebook.js";
 export default {
   name: "nav-bar",
   data: function() {
     return {
       headerClass: "",
-      loggedUser: null
+      profileImageURL : ''
     };
   },
-  mounted() {
-    console.log('mounted');
-    this.loggedUser = getAuthUser();
-  },
+
   computed: {
     isHomeView() {
       return this.$route.path === "/";
     },
     isLoggedIn() {
-      const user = getAuthUser();
-      return user != null;
-    }
+      return this.$store.getters.isLoggedIn;
+    }    
   },
   methods: {
     getProfileImage() {
+      //return 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10156610230217277&height=50&width=50&ext=1538661295&hash=AeQgIuE6sKea2Go6';
+      const loggedUser = getAuthUser();
+      var vm = this;
       if (loggedUser.oAuthProvider == "facebook") {
-        getFBProfilePicture(user.oAuthUniqueId)
+        return getFBProfilePicture(loggedUser.oAuthUniqueId)
           .then(response => {
-            console.log(response);
+            vm.profileImageURL = response.data.url;
           })
           .catch(reject => {
             console.log(reject);
           });
       }
     }
+  },
+  created(){
+    this.getProfileImage();
   }
 };
 </script>
@@ -124,7 +127,4 @@ header .navbar {
   margin-left: 15px;
   direction: ltr;
 }
-
-
-
 </style>

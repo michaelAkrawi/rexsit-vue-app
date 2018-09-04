@@ -101,9 +101,10 @@ export default {
       userService
         .register(user)
         .then(response => {
-          storeAuthUser(response.data);
-          this.$router.push({
-            path: `/`
+          this.$store.dispatch("login", user).then(resolve => {
+            this.$router.push({
+              path: `/`
+            });
           });
         })
         .catch(reject => {

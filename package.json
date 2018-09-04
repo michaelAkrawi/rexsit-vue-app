@@ -22,7 +22,8 @@
     "vue-password": "^1.2.0",
     "vue-router": "^3.0.1",
     "vue-select": "^2.4.0",
-    "vuejs-datepicker": "^1.5.3"
+    "vuejs-datepicker": "^1.5.3",
+    "vuex": "^3.0.1"
   },
   "browserslist": [
     "> 1%",
