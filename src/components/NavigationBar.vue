@@ -17,7 +17,7 @@
             </div>
             <div v-else>
               <div id= "profile-img">
-                <img :src="profileImageURL"/>
+                <img :src="getProfileImageURL"/>
               </div>
             </div>
           </div>
@@ -46,26 +46,10 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
+    },
+    getProfileImageURL (){
+        return this.$store.getters.profileImageURL;
     }    
-  },
-  methods: {
-    getProfileImage() {
-      //return 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10156610230217277&height=50&width=50&ext=1538661295&hash=AeQgIuE6sKea2Go6';
-      const loggedUser = getAuthUser();
-      var vm = this;
-      if (loggedUser.oAuthProvider == "facebook") {
-        return getFBProfilePicture(loggedUser.oAuthUniqueId)
-          .then(response => {
-            vm.profileImageURL = response.data.url;
-          })
-          .catch(reject => {
-            console.log(reject);
-          });
-      }
-    }
-  },
-  created(){
-    this.getProfileImage();
   }
 };
 </script>
