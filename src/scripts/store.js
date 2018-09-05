@@ -8,14 +8,14 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         isLoggedIn: getAuthUser() !== null,
-        profileImageURL: ''
+        profileImageURL: getAuthUser() !== null ? getAuthUser().profileImageURL : ''
     },
     getters: {
         isLoggedIn(state) {
             return state.isLoggedIn;
         },
         profileImageURL(state) {
-            return this.profileImageURL;
+            return state.profileImageURL;
         }
     },
     mutations: {
@@ -28,22 +28,19 @@ export const store = new Vuex.Store({
         [Logout](state) {
             state.isLoggedIn = false;
         },
-        [LoadProfileImage](state, user) {
-            getFBProfilePicture(user.oAuthUniqueId).then(response => {
-               state.profileImageURL = response.data.url;     
-            }).catch(error => {
-                console.log(error);
-            })
+        [LoadProfileImage](state, url) {
+            state.profileImageURL = url;
         }
 
     },
     actions: {
-        login(context, user) {
-            context.commit(Login);
+        async login({ dispatch, commit }, user) {            
+            commit(Login);
+            await dispatch('loadProfileImage', user);
+            debugger;
             return new Promise(resolve => {
+                commit(LoginSuccsess);
                 localStorage.setItem('user', JSON.stringify(user));
-                context.commit(LoginSuccsess);
-                context.commit(LoadProfileImage, user)
                 resolve();
             })
         },
@@ -51,11 +48,15 @@ export const store = new Vuex.Store({
             localStorage.removeItem('user');
         },
         loadProfileImage(context, user) {
-            getFBProfilePicture().then(response => {
-                context.commit(LoadProfileImage, response.data.url);
-            }).catch({
-
-            })
+            return new Promise((resolve => {
+                getFBProfilePicture(user.oAuthUniqueId).then(response =>{
+                    context.commit(LoadProfileImage, response.data.url);
+                    user.profileImageURL = response.data.url;
+                    debugger;
+                    resolve();
+                });
+                
+            }))
         }
     }
 

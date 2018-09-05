@@ -17,7 +17,7 @@
             </div>
             <div v-else>
               <div id= "profile-img">
-                <img :src="getProfileImageURL"/>
+                <img :src="getProfileImageURL" />
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@ export default {
   data: function() {
     return {
       headerClass: "",
-      profileImageURL : ''
+      profileImageURL: ""
     };
   },
 
@@ -47,9 +47,10 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    getProfileImageURL (){
-        return this.$store.getters.profileImageURL;
-    }    
+    getProfileImageURL() {
+      debugger;
+      return this.$store.getters.profileImageURL;
+    }
   }
 };
 </script>
@@ -110,5 +111,14 @@ header .navbar {
   float: left;
   margin-left: 15px;
   direction: ltr;
+}
+
+.profile-img {
+  display: inline-block;
+}
+
+.profile-img img {
+  width: 30px;
+  border-radius: 100%;
 }
 </style>

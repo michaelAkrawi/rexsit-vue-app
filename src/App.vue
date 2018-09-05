@@ -18,8 +18,7 @@ export default {
   components: {
     "nav-bar": NavigationBar
   },
-  mounted() {
-    debugger;
+  mounted() {    
     loadFbSdk(config.facebookAppID, "v3.1", function() {});
   }
 };
@@ -43,6 +42,7 @@ body {
   background-color: #00c4a7;
   border-color: transparent;
 }
+
 
 .container {
   margin-top: 15px;

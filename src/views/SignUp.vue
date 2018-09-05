@@ -108,6 +108,8 @@ export default {
           });
         })
         .catch(reject => {
+          console.log(reject);
+          
           if (reject.response.status == "409") {
             this.existed = true;
           }
