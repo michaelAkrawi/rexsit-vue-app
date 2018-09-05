@@ -16,8 +16,8 @@
               <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("login")}} </router-link>          
             </div>
             <div v-else>
-              <div id= "profile-img">
-                <img :src="getProfileImageURL" />
+              <div>
+                <img :src="getProfileImageURL" class="profile-image" />
               </div>
             </div>
           </div>
@@ -47,8 +47,7 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    getProfileImageURL() {
-      debugger;
+    getProfileImageURL() {  
       return this.$store.getters.profileImageURL;
     }
   }
@@ -113,11 +112,7 @@ header .navbar {
   direction: ltr;
 }
 
-.profile-img {
-  display: inline-block;
-}
-
-.profile-img img {
+.profile-image {
   width: 30px;
   border-radius: 100%;
 }

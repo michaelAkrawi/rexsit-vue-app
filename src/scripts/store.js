@@ -36,8 +36,7 @@ export const store = new Vuex.Store({
     actions: {
         async login({ dispatch, commit }, user) {            
             commit(Login);
-            await dispatch('loadProfileImage', user);
-            debugger;
+            await dispatch('loadProfileImage', user);            
             return new Promise(resolve => {
                 commit(LoginSuccsess);
                 localStorage.setItem('user', JSON.stringify(user));
@@ -51,8 +50,7 @@ export const store = new Vuex.Store({
             return new Promise((resolve => {
                 getFBProfilePicture(user.oAuthUniqueId).then(response =>{
                     context.commit(LoadProfileImage, response.data.url);
-                    user.profileImageURL = response.data.url;
-                    debugger;
+                    user.profileImageURL = response.data.url;                    
                     resolve();
                 });
                 

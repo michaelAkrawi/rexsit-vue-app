@@ -17,7 +17,9 @@ export const messages = {
         existedUser : 'המייל שהוזן נמצא בשימוש במערכת',
         city : 'עיר',
         date : 'תאריך',
-        alreadyHaveAccount : 'כבר נרשמתי לאתר'    
+        alreadyHaveAccount : 'כבר נרשמתי לאתר',
+        forgotPassword: 'שכחתי סיסמא',
+        haventSignedUpYet : 'עדיין לא נרשמתי לאתר'
 
 
 
@@ -31,8 +33,4 @@ export const errors = {
       email : 'כתובת הדוא\"ל שהוזנה אינה חוקית'
   }
 }
-
-
-
-
 

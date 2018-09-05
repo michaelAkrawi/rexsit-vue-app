@@ -46,3 +46,13 @@ export function getFBProfilePicture(userID) {
 
     });
 }
+
+export function fillUserDataFromReponse(oAuthResonse){
+    return {
+        firstname: oAuthResonse.first_name,
+        lastName: oAuthResonse.last_name,
+        email: oAuthResonse.email,
+        oAuthProvider: "facebook",
+        oAuthUniqueId: oAuthResonse.id
+      };
+}

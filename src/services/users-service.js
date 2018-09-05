@@ -19,23 +19,24 @@ export const User = {
     oAuthUniqueId : undefined
 }
 
-function login(username, password) {
-    axios.post(`${config.apiURL}/authentication/user/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    }).then(response => {
-        if (response.data.token) {
-            localStorage.setItem('user', JSON.stringify(response));
-        }
-        return response;
-    }).catch(error => {
-        console.log(error);
-    })
+function login(user) {
+    debugger;
+    return new Promise((resolve, reject)=> {
+        axios.post(`${config.apiURL}/authentication/user/login`, JSON.stringify(user), {
+            method : 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then( response =>{
+            resolve(response);
+        })
+        .catch(error =>{
+            reject(error);
+        })
+    });        
 }
 
 function register(user) {
-
+    debugger;
     return new Promise((resolve, reject) => {
         const requestOptions = {
             method: 'POST',

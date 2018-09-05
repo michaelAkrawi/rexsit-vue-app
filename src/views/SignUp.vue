@@ -27,7 +27,7 @@
             </div>
              <div class="form-group">
                 <label for="txb-password"> {{$t("password")}} </label>
-                <vue-password  :class="{'password-control-error': validation.hasError('userData.password')}"  v-model="userData.password" dir="ltr"> </vue-password>
+                <vue-password  :class="{'password-control-error': validation.hasError('userData.password')}"  v-model="userData.passwordText" dir="ltr"> </vue-password>
                 <div class="error-message">{{ validation.firstError('userData.password') }}</div>
             </div>                    
             <div>
@@ -47,10 +47,9 @@
 <script>
 import FacebookLogin from "../components/FacebookLogin.vue";
 import { userService, User } from "../services/users-service.js";
-import { storeAuthUser } from "../scripts/auth";
 import SimpleVueValidation from "simple-vue-validator";
 import VuePassword from "vue-password";
-import { getFBInfo } from "../scripts/facebook.js";
+import { getFBInfo, fillUserDataFromReponse } from "../scripts/facebook.js";
 const Validator = SimpleVueValidation.Validator;
 
 export default {
@@ -76,20 +75,10 @@ export default {
   methods: {
     facebookRegister(response) {
       getFBInfo(response.userID).then(response => {
-        const u = this.fillDataFromFacebookResponse(response);
+        const u = fillUserDataFromReponse(response);
         this.login(u);
       });
-    },
-
-    fillDataFromFacebookResponse(response) {
-      return {
-        firstname: response.first_name,
-        lastName: response.last_name,
-        email: response.email,
-        oAuthProvider: "facebook",
-        oAuthUniqueId: response.id
-      };
-    },
+    },   
     register() {
       this.$validate().then(succ => {
         if (succ) {
@@ -128,7 +117,7 @@ export default {
         .required()
         .email();
     },
-    "userData.password": function(value) {
+    "userData.passwordText": function(value) {
       return Validator.value(value).required();
     }
   }
