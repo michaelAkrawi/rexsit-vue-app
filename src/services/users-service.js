@@ -19,8 +19,7 @@ export const User = {
     oAuthUniqueId : undefined
 }
 
-function login(user) {
-    debugger;
+function login(user) {    
     return new Promise((resolve, reject)=> {
         axios.post(`${config.apiURL}/authentication/user/login`, JSON.stringify(user), {
             method : 'POST',
@@ -36,7 +35,7 @@ function login(user) {
 }
 
 function register(user) {
-    debugger;
+    
     return new Promise((resolve, reject) => {
         const requestOptions = {
             method: 'POST',

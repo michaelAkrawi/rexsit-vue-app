@@ -19,6 +19,11 @@
                 <input type="password" id="txb-password" class="form-control" v-model="userData.passwordText" dir="ltr">
                 <div class="error-message">{{validation.firstError('userData.passwordText')}} </div>
             </div>
+            <div v-if="wrongCredentials">            
+                <div class="error-message">
+                    {{$t("wrongCredentials")}}
+                </div>
+            </div>
             <div>
                 <button class="btn btn-block btn-primary" @click="login">{{$t("login")}} </button>
             </div>
@@ -48,7 +53,8 @@ export default {
   },
   data: function() {
     return {
-      userData: User
+      userData: User,
+      wrongCredentials: false
     };
   },
   computed: {
@@ -58,28 +64,33 @@ export default {
   },
   methods: {
     login() {
-      this.$validate().then(succ => {        
+      this.wrongCredentials = false;
+      this.$validate().then(succ => {
         if (succ) {
           this.fetchUser(this.userData);
         }
       });
     },
-    fetchUser(user) {      
+    fetchUser(user) {
       userService
         .login(user)
         .then(response => {
-          this.$store.dispatch("login", user).then(response => {
+          this.$store.dispatch("login", response.data).then(response => {
             this.$router.push("/");
           });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(error => {          
+          if (error.response.status == "401") {
+            this.wrongCredentials = true;
+          } else {
+            console.log(error);
+          }
         });
     },
     loginWithFacebook(oAuthResponse) {
       getFBInfo(oAuthResponse.userID)
         .then(response => {
-          const user = fillUserDataFromReponse(response);          
+          const user = fillUserDataFromReponse(response);
           this.fetchUser(user);
         })
         .catch(error => {

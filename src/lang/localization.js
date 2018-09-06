@@ -19,7 +19,8 @@ export const messages = {
         date : 'תאריך',
         alreadyHaveAccount : 'כבר נרשמתי לאתר',
         forgotPassword: 'שכחתי סיסמא',
-        haventSignedUpYet : 'עדיין לא נרשמתי לאתר'
+        haventSignedUpYet : 'עדיין לא נרשמתי לאתר',
+        wrongCredentials : 'שם המשתמש או הסיסמא שהזנת שגויים'
 
 
 
