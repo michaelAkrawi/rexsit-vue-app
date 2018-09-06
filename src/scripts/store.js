@@ -44,11 +44,12 @@ export const store = new Vuex.Store({
             })
         },
         logout(context) {
+            context.commit(Logout);
             localStorage.removeItem('user');
         },
         loadProfileImage(context, user) {
             return new Promise((resolve => {
-                getFBProfilePicture(user.oAuthUniqueId).then(response =>{
+                getFBProfilePicture(user.OAuthUniqueId).then(response =>{
                     context.commit(LoadProfileImage, response.data.url);
                     user.profileImageURL = response.data.url;                    
                     resolve();

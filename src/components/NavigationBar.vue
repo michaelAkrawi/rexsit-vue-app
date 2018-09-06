@@ -16,9 +16,7 @@
               <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("login")}} </router-link>          
             </div>
             <div v-else>
-              <div>
-                <img :src="getProfileImageURL" class="profile-image" />
-              </div>
+              <user-profile-menu></user-profile-menu>
             </div>
           </div>
             
@@ -29,26 +27,24 @@
 </template>
 
 <script>
-import { getAuthUser } from "../scripts/auth.js";
-import { getFBProfilePicture } from "../scripts/facebook.js";
+import UserProfileMenu from '../components/UserProfileMenu.vue';
+
 export default {
   name: "nav-bar",
   data: function() {
     return {
-      headerClass: "",
-      profileImageURL: ""
+      headerClass: ""
     };
   },
-
+  components : {
+    'user-profile-menu' : UserProfileMenu
+  },
   computed: {
     isHomeView() {
       return this.$route.path === "/";
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    },
-    getProfileImageURL() {  
-      return this.$store.getters.profileImageURL;
     }
   }
 };
@@ -110,10 +106,5 @@ header .navbar {
   float: left;
   margin-left: 15px;
   direction: ltr;
-}
-
-.profile-image {
-  width: 30px;
-  border-radius: 100%;
 }
 </style>

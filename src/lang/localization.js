@@ -20,10 +20,10 @@ export const messages = {
         alreadyHaveAccount : 'כבר נרשמתי לאתר',
         forgotPassword: 'שכחתי סיסמא',
         haventSignedUpYet : 'עדיין לא נרשמתי לאתר',
-        wrongCredentials : 'שם המשתמש או הסיסמא שהזנת שגויים'
-
-
-
+        wrongCredentials : 'שם המשתמש או הסיסמא שהזנת שגויים',
+        profile : 'פרופיל',
+        inbox : 'הודעות',
+        logout : 'יציאה'
     }
 
 }
@@ -34,4 +34,3 @@ export const errors = {
       email : 'כתובת הדוא\"ל שהוזנה אינה חוקית'
   }
 }
-
