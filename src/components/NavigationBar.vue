@@ -1,43 +1,42 @@
 <template>
     <header :class="{'home' : isHomeView}">
-     
-     <nav :class="[{ 'navbar-transparent': isHomeView }, 'navbar navbar-expand-lg']">        
-        <router-link class="navbar-brand" v-bind:to="'/'">          
-          <img src="../assets/Rexsit-03.png">
-        </router-link>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-   
-        <div class="collapse navbar-collapse navbar-left" id="navbarNav">
-          <div class="navbar-nav">          
-            <div v-if="isLoggedIn == false">
-              <router-link class="nav-item nav-link" v-bind:to="'/signup'">{{$t("register")}}</router-link>                            
-              <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("login")}} </router-link>          
-            </div>
-            <div v-else>
-              <user-profile-menu></user-profile-menu>
-            </div>
-          </div>
-            
-          </div>              
-      </nav>
+     <div role="nav" :class="[{ 'navbar-transparent': isHomeView }, 'row justify-content-between']">
+       <div :class="[{ 'navbar-transparent': isHomeView }, 'col-2']">
+          <a v-bind:to="'/'">          
+              <img class="brand-img" src="../assets/Rexsit-03.png">
+          </a>
+       </div>
+       <div class='navbar-links col-4'> 
+         <div v-if="isLoggedIn == false">
+          <router-link class="nav-item nav-link" v-bind:to="'/signup'">{{$t("register")}}</router-link> 
+          <router-link class="nav-item nav-link" v-bind:to="'/login'"> {{$t("login")}} </router-link>  
+         </div>
+         <div v-else>
+          <user-profile-menu></user-profile-menu>
+        </div>  
+       </div> 
+       
+       <a id="toggle-menu" role="button" data-target=".navbar-links" data-toggle="collapse" @click="toggle=true">
+            <i class="fas fa-align-justify"></i>
+          </a>    
+     </div>
     </header>
 
 </template>
 
 <script>
-import UserProfileMenu from '../components/UserProfileMenu.vue';
+import UserProfileMenu from "../components/UserProfileMenu.vue";
 
 export default {
   name: "nav-bar",
   data: function() {
     return {
-      headerClass: ""
+      headerClass: "",
+      showLinksStyle: ''
     };
   },
-  components : {
-    'user-profile-menu' : UserProfileMenu
+  components: {
+    "user-profile-menu": UserProfileMenu
   },
   computed: {
     isHomeView() {
@@ -45,6 +44,11 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
+    }
+  },
+  methods :{
+    toggle(){
+      this.showLinksStyle = 'block';
     }
   }
 };
@@ -57,7 +61,11 @@ header {
   height: unset;
 }
 
-.navbar-brand img {
+.container {
+  margin-top: 0px !important;
+}
+
+.brand-img {
   width: 130px;
   height: 130px;
   position: absolute;
@@ -89,16 +97,21 @@ header .navbar {
   direction: rtl;
 }
 
-.navbar-nav a {
+.navbar-links {
+  text-align: left;
+  padding-top: 15px;
+}
+
+.navbar-links a {
   text-decoration: none;
   color: #333 !important;
   font-weight: 600;
   font-size: 16px;
-
+  display: inline-block;
   padding: 0px 0px 0px 5px;
 }
 
-.navbar-nav a:first-child {
+.navbar-links a:first-child {
   border-left: 2px solid #333;
 }
 
@@ -106,5 +119,33 @@ header .navbar {
   float: left;
   margin-left: 15px;
   direction: ltr;
+}
+
+#toggle-menu {
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  #toggle-menu {
+    display: inline;
+    position: absolute;
+    left: 5px;
+    top: 15px;
+    font-size: 22px;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+
+    padding: 5px;
+  }
+
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-links a {
+    display: block;
+    border: none;
+    background-color: #fff;
+  }
 }
 </style>

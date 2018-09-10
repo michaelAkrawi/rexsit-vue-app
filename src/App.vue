@@ -46,5 +46,6 @@ body {
 
 .container {
   margin-top: 15px;
+  text-align: right;
 }
 </style>
