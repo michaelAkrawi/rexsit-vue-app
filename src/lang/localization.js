@@ -23,7 +23,15 @@ export const messages = {
         wrongCredentials : 'שם המשתמש או הסיסמא שהזנת שגויים',
         profile : 'פרופיל',
         inbox : 'הודעות',
-        logout : 'יציאה'
+        logout : 'יציאה',
+        address : 'כתובת',
+        telephone : 'טלפון',
+        day : 'יום',
+        month : 'חודש',
+        year : 'שנה',
+        birthdate : 'תאריך לידה',
+        next : 'הבא'
+
     }
 
 }

@@ -8,7 +8,10 @@
         </p>
         <div class="wizard-step-content">
             <slot></slot>
-        </div>     
+        </div>  
+        <div class="wizrd-step-bottom">   
+           <button id="btn-next" class="btn btn-primary">{{$t("next")}}</button>
+        </div>
      </div>
 </template>
 
@@ -20,22 +23,34 @@
   border-radius: 50%;
   width: 70px;
   height: 70px;
-  border: 3px solid #F3F2EE;
+  border: 3px solid #f3f2ee;
   text-align: center;
   position: relative;
   display: inline-block;
 }
 
 p {
-display: inline-block;
+  display: inline-block;
 }
 
 .wizard-step-title i {
-    margin-left:  5px;
-    color: #333;
-    font-size: 20px;
-    position: absolute;
+  margin-left: 5px;
+  color: #333;
+  font-size: 20px;
+  position: absolute;
 }
+
+.wizrd-step-bottom {
+  margin-top: 25px;  
+  overflow: hidden;
+
+}
+
+.wizrd-step-bottom #btn-next{
+  float: left;
+  
+ 
+}    
 </style>
 
 <script>

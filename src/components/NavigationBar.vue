@@ -1,7 +1,7 @@
 <template>
     <header :class="{'home' : isHomeView}">
-     <div role="nav" :class="[{ 'navbar-transparent': isHomeView }, 'row justify-content-between']">
-       <div :class="[{ 'navbar-transparent': isHomeView }, 'col-2']">
+     <div id="navbar" role="nav" :class="[{ 'navbar-transparent': isHomeView }, 'row justify-content-between']">
+       <div class= "col-2">
           <a v-bind:to="'/'">          
               <img class="brand-img" src="../assets/Rexsit-03.png">
           </a>
@@ -32,7 +32,7 @@ export default {
   data: function() {
     return {
       headerClass: "",
-      showLinksStyle: ''
+      showLinksStyle: ""
     };
   },
   components: {
@@ -46,9 +46,9 @@ export default {
       return this.$store.getters.isLoggedIn;
     }
   },
-  methods :{
-    toggle(){
-      this.showLinksStyle = 'block';
+  methods: {
+    toggle() {
+      this.showLinksStyle = "block";
     }
   }
 };
@@ -80,7 +80,7 @@ header.home {
   background-position: 35% 75%;
 }
 
-header .navbar {
+header #navbar {
   background-color: #fff;
   border-color: #e7e7e7;
   box-shadow: 0 0 10px grey;

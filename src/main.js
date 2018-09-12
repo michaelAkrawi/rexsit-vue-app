@@ -44,7 +44,7 @@ const routes = [
   { path: '/', component: Home },
   { path: '/signup', component: SignUp },
   { path: '/login', component: Login },
-  { path: '/profile/:fullName', component: Profile, props: true }
+  { path: '/profile', component: Profile }
 
 ];
 
@@ -61,7 +61,7 @@ router.beforeEach((to, from, next) => {
   if (!loggedIn && authRequired) {
     return next('/login')
   }
-  if((to.path == '/login' || to.path == '/signup') && loggedIn){
+  if ((to.path == '/login' || to.path == '/signup') && loggedIn) {
     return next('/');
   }
 
@@ -73,6 +73,6 @@ new Vue({
   el: '#app',
   render: h => h(App),
   router,
-  i18n, 
+  i18n,
   store
 }).$mount("#app")
