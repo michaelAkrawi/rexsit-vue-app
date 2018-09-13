@@ -3,7 +3,7 @@
       <div class="row justify-content-md-center">
         <div class="col-lg-6 col-md-auto">
             <wizard :steps="steps">
-                <wizard-step slot="details" title="פרטים" icon="fas fa-user">
+                <wizard-step slot="details">
                     <form>
                       <div class="row">
                         <div class="col-6">
@@ -51,6 +51,9 @@
                         </div>                        
                       </form>
                   </wizard-step>
+                  <wizard-step slot="animals">
+                    <input type="text" placeholder="כלב"/>
+                  </wizard-step>
               </wizard>
           </div>
         </div>
@@ -81,7 +84,10 @@ export default {
   data: function() {
     return {
       cities: [],
-      steps : ['details']
+      steps: [
+        { name: "details", icon: "fas fa-user", title: "פרטים", active: true },
+        { name: "animals", icon: "fas fa-paw", title: "כלבים", active: false }
+      ]
     };
   },
   methods: {
