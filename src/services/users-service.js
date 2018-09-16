@@ -1,6 +1,6 @@
 import axios from "../../node_modules/axios";
 import config from 'config';
-import { authHeader } from '../scripts/auth.js';
+import { authHeader, getAuthUser } from '../scripts/auth.js';
 
 export const userService = {
     register,
@@ -15,27 +15,27 @@ export const User = {
     lastName: '',
     email: '',
     passwordText: '',
-    oAuthProvider :'',
-    oAuthUniqueId : undefined
+    oAuthProvider: '',
+    oAuthUniqueId: undefined
 }
 
-function login(user) {    
-    return new Promise((resolve, reject)=> {
+function login(user) {
+    return new Promise((resolve, reject) => {
         axios.post(`${config.apiURL}/authentication/user/login`, JSON.stringify(user), {
-            method : 'POST',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
-        .then( response =>{
-            resolve(response);
-        })
-        .catch(error =>{
-            reject(error);
-        })
-    });        
+            .then(response => {
+                resolve(response);
+            })
+            .catch(error => {
+                reject(error);
+            })
+    });
 }
 
 function register(user) {
-    
+
     return new Promise((resolve, reject) => {
         const requestOptions = {
             method: 'POST',
@@ -55,15 +55,17 @@ function register(user) {
 
 
 function getById(id) {
-    axios.get(`${config.apiDomain}/users/${id}`, {
-        headers: authHeader()
+    return new Promise((resolve, reject) => {
+    
+        const header = authHeader();
+        axios.get(`${config.apiURL}/user/${id}`, {
+            headers:  authHeader()
+        }).then(response => {
+            resolve(response);
+        }).catch(error => {
+            reject(error);
+        })
     })
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            console.log(error);
-        })
 }
 
 function _delete() {

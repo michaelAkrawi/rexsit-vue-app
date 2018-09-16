@@ -9,25 +9,26 @@
                         <div class="col-6">
                           <div class="form-group">
                             <label for="txb-first-name"> {{$t("firstname")}} </label>
-                            <input type="text" id="txb-first-name" class="form-control" />
+                            <input type="text" id="txb-first-name" class="form-control" v-model="profile.firstName" />
                           </div>
                         </div>
                         <div class="col-6">
                           <div class="form-group">
                             <label for="txb-last-name">{{$t("lastname")}} </label>
-                            <input type="text" id="txb-last-name" class="form-control"/>
+                            <input type="text" id="txb-last-name" class="form-control" v-model="profile.lastName"/>
                           </div>
                           </div>
                         </div>                            
                         <div class="form-group">
                           <label for="drop-down-cities">{{$t("city")}}</label>
-                          <select id="drop-down-cities" class="form-control" v-model="cities">
+                          <select id="drop-down-cities" class="form-control" v-model="profile.cityID">
+                            <option disabled value="0"> {{$t("city")}} </option>
                             <option v-for="c in cities" :value="c.ID"> {{c.Name.trim()}} </option>
                           </select>
                         </div>
                         <div class="form-group">
                           <label for="txb-address">{{$t("address")}} </label>
-                          <input type="text" id="txv-address" class="form-control" />
+                          <input type="text" id="txv-address" class="form-control" v-model="profile.address" />
                         </div>                             
                         <div class="form-group">
                           <label for="txb-phone">{{$t("telephone")}}</label>
@@ -38,20 +39,10 @@
                             <label for="">{{$t("birthdate")}}</label>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="col-4">                                                        
-                            <select id="drop-down-day" class="form-control"></select>                            
-                          </div>
-                          <div class="col-4">                                                        
-                            <select id="drop-down-month" class="form-control"></select>                            
-                          </div>
-                          <div class="col-4">                                                        
-                            <select id="drop-down-year" class="form-control"></select>                            
-                          </div>
-                        </div>                        
+                        <date-drop-down></date-drop-down>             
                       </form>
                   </wizard-step>
-                  <wizard-step slot="animals">
+                  <wizard-step slot="dogs">
                     <input type="text" placeholder="כלב"/>
                   </wizard-step>
               </wizard>
@@ -72,22 +63,33 @@ label {
 import Wizard from "../components/Wizard.vue";
 import WizardStep from "../components/WizardStep.vue";
 import CityAutoComplete from "../components/CityAutoComplete.vue";
+import DateDropDown from "../components/DateDropDown.vue";
 import { apihelper } from "../scripts/apihelper.js";
+import { userService } from "../services/users-service";
+import { getAuthUser } from "../scripts/auth";
 
 export default {
   name: "app",
   components: {
     wizard: Wizard,
     "wizard-step": WizardStep,
-    "city-autocomplete": CityAutoComplete
+    "city-autocomplete": CityAutoComplete,
+    "date-drop-down": DateDropDown
   },
   data: function() {
     return {
       cities: [],
       steps: [
         { name: "details", icon: "fas fa-user", title: "פרטים", active: true },
-        { name: "animals", icon: "fas fa-paw", title: "כלבים", active: false }
-      ]
+        { name: "dogs", icon: "fas fa-paw", title: "כלבים", active: false }
+      ],
+      profile: {
+        firstName: "",
+        lastName: "",
+        cityID: 0,
+        address: "",
+        birthDate: undefined
+      }
     };
   },
   methods: {
@@ -101,10 +103,25 @@ export default {
           });
         }
       });
+    },
+    fetchUserData() {
+      const loggedUser = getAuthUser();
+      userService
+        .getById(loggedUser.ID)
+        .then(response => {
+          if (response.data) {
+            this.profile.firstName = response.data.FirstName;
+            this.profile.lastName = response.data.LastName;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   created() {
     this.fetchCities();
+    this.fetchUserData();
   }
 };
 </script>
