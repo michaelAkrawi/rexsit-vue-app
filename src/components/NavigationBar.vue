@@ -2,9 +2,9 @@
     <header :class="{'home' : isHomeView}">
      <div id="navbar" role="nav" :class="[{ 'navbar-transparent': isHomeView }, 'row justify-content-between']">
        <div class= "col-2">
-          <a v-bind:to="'/'">          
+          <router-link class="brand-logo" v-bind:to="'/'"> 
               <img class="brand-img" src="../assets/Rexsit-03.png">
-          </a>
+          </router-link>          
        </div>
        <div class='navbar-links col-4'> 
          <div v-if="isLoggedIn == false">
@@ -65,11 +65,15 @@ header {
   margin-top: 0px !important;
 }
 
-.brand-img {
-  width: 130px;
-  height: 130px;
+.brand-logo {
   position: absolute;
   top: -30px;
+  right: 15px;
+}
+
+.brand-logo img {
+  width: 130px;
+  height: 130px;
 }
 
 header.home {
