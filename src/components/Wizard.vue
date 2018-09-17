@@ -39,7 +39,7 @@ export default {
     steps: {
       type: Array,
       default: () => {
-        return [];
+        return [{}];
       }
     }
   },

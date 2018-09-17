@@ -16,23 +16,27 @@
 export default {
   name: "wizard-progress-bar",
   props: {
-    steps: []
-  }, 
-  computed : {
-      isActiveStep(step){
-          return step.active;
+    steps: {
+      type: Array,
+      default: () => {
+        return [{}];
       }
+    }
+  },
+  computed: {
+    isActiveStep(step) {
+      return step.active;
+    }
   }
 };
 </script>
 
 
 <style scoped>
-
-p{
-    padding-right: 5px;
-    margin-top: 10px;
-    font-weight: 600;
+p {
+  padding-right: 5px;
+  margin-top: 10px;
+  font-weight: 600;
 }
 
 .wizard-progress-bar {
@@ -49,7 +53,6 @@ p{
 }
 
 .progress-bar-step {
-  
   background-color: #ddd;
   color: #fff;
   width: 50px;
@@ -60,13 +63,12 @@ p{
   text-align: center;
 }
 
-.active .progress-bar-step{
+.active .progress-bar-step {
   background-color: #00d1b2;
 }
 
 .active p {
-    color:  #00d1b2;
+  color: #00d1b2;
 }
-
 </style>
 
