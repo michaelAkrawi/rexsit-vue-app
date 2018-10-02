@@ -1,8 +1,8 @@
 <template>
      <div class="container">
       <div class="row justify-content-md-center">
-        <div class="col-lg-6 col-md-auto">
-            <wizard :steps="steps">
+        <div class="col-lg-7 col-md-auto">
+            <wizard :steps="steps" :on-next-button-clicked="onWizardNextStep">
                 <wizard-step slot="details">
                     <form>
                       <div class="row">
@@ -35,15 +35,52 @@
                           <input type="tel" id="txb-phone"  class="form-control"/>
                         </div>
                         <div class="row">
+                          <div class="col-6">
+                            <label> {{$t("profileImage")}} </label>
+                             <div>
+                               <input type="button" value="Upload image">
+                             </div>
+                          </div>
+                          <div class="col-6">
+                              <img :src="profileImage">
+                          </div>
+                        </div>
+                        <div class="row">
                           <div class="col-12">
                             <label for="">{{$t("birthdate")}}</label>
                           </div>
                         </div>
-                        <date-drop-down></date-drop-down>             
+                        <date-drop-down v-model="profile.birthDate"></date-drop-down>             
                       </form>
                   </wizard-step>
-                  <wizard-step slot="dogs">
-                    <input type="text" placeholder="כלב"/>
+                  <wizard-step slot="dogs">                    
+                    <div class="form-group">
+                        <label for="txb-dog-name">{{$t("dogName")}}</label>
+                        <input type="text" id="txb-dog-name" class="form-control">                        
+                    </div>                 
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="form-group">
+                          <label for="txb-age-years"> {{$t("ageByYears")}} </label>
+                          <input id="txb-age-years" type="text" class="form-control">
+                        </div>                        
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group">
+                          <label for="txb-age-month">{{$t("ageByMonths")}} </label>
+                          <input id="txb-age-months" type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group">
+                            <label for="rb-male">{{$t("male")}}</label>
+                          <input type="radio" name="rb-gendar"  id="rb-male">
+                        <label for="rb-female">{{$t("female")}}</label>
+                        <input type="radio" name="rb-gendar" id="rb-female">
+                        </div>
+                        
+                      </div>
+                    </div>
                   </wizard-step>
               </wizard>
           </div>
@@ -80,16 +117,27 @@ export default {
     return {
       cities: [],
       steps: [
-        { name: "details", icon: "fas fa-user", title: "פרטים", active: true },
-        { name: "dogs", icon: "fas fa-paw", title: "כלבים", active: false }
+        {
+          name: "details",
+          icon: "fas fa-user",
+          title: this.$t("details"),
+          active: true
+        },
+        {
+          name: "dogs",
+          icon: "fas fa-paw",
+          title: this.$t("dogs"),
+          active: false
+        }
       ],
       profile: {
         firstName: "",
         lastName: "",
         cityID: 0,
         address: "",
-        birthDate: undefined
-      }
+        birthDate: ""
+      },
+      profileImage: getAuthUser().profileImageURL
     };
   },
   methods: {
@@ -106,17 +154,28 @@ export default {
     },
     fetchUserData() {
       const loggedUser = getAuthUser();
+      var vm = this;
       userService
-        .getById(loggedUser.ID)
+        .get()
         .then(response => {
           if (response.data) {
-            this.profile.firstName = response.data.FirstName;
-            this.profile.lastName = response.data.LastName;
+            vm.profile.firstName = response.data.FirstName;
+            vm.profile.lastName = response.data.LastName;
           }
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    onWizardNextStep(step) {
+      if (step.name == "details") {
+        this.savePersonalInfo();
+      }
+    },
+    savePersonalInfo() {
+      userService.updatePersonalInfo(this.profile).catch(error => {
+        console.log(error);
+      });
     }
   },
   created() {

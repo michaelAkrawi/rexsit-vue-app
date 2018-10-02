@@ -32,6 +32,7 @@ export const messages = {
         birthdate: 'תאריך לידה',
         next: 'הבא',
         previous: 'הקודם',
+        saveAndContinue : 'שמור והמשך',
         monthList: {
             january: 'ינואר',
             february: 'פברואר',
@@ -45,7 +46,16 @@ export const messages = {
             october: 'אוקטובר',
             november: 'נובמבר',
             december: 'דצמבר'
-        }
+        },
+        details  : 'פרטים',
+        dogs :'כלבים',
+        profileImage : 'תמונת פרופיל',
+        dogName : 'שם הכלב',
+        ageByYears : 'גיל (שנים)',
+        ageByMonths : 'גיל (חודשים)',
+        male : 'זכר',
+        female : 'נקבה'
+
 
     }
 

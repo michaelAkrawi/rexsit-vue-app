@@ -5,8 +5,7 @@
             <slot v-for="s in steps" :name="s.name" v-if="s.active"></slot>
         </div>
         <div class="wizard-step-bottom">   
-           <button id="btn-prev" @click="onPrevClick" class="btn btn-primary" v-show="showPrevButton"> {{$t("previous")}} </button>
-           <button id="btn-next" @click="onNextClick" class="btn btn-primary" v-show="showNextButton">{{$t("next")}}</button>
+           <button id="btn-next" @click="onNextClick" class="btn btn-primary" v-show="showNextButton">{{$t("saveAndContinue")}}</button>
         </div>
     </div> 
 </template>
@@ -22,16 +21,15 @@
 .wizard-step-bottom {
   margin-top: 25px;
   overflow: hidden;
+  text-align: center;
 }
 
-.wizard-step-bottom #btn-next {
-  float: left;
-}
+
 </style>
 
 <script>
 import WizardProgress from "../components/WizardProgress.vue";
-import { User } from '../services/users-service';
+import { User } from "../services/users-service";
 
 export default {
   name: "wizard",
@@ -41,7 +39,8 @@ export default {
       default: () => {
         return [{}];
       }
-    }
+    },
+    onNextButtonClicked : undefined
   },
   computed: {
     showNextButton() {
@@ -57,12 +56,14 @@ export default {
   methods: {
     onNextClick() {
       const index = this.getCurrentActiveStepIndex();
+      this.onNextButtonClicked(this.steps[index]);
       this.steps[index].active = false;
       this.steps[index + 1].active = true;
     },
     onPrevClick() {
       const index = this.getCurrentActiveStepIndex();
       this.steps[index].active = false;
+      this.step[index].onNextCallbackFunction();
       this.steps[index - 1].active = true;
     },
     getCurrentActiveStepIndex() {

@@ -1,13 +1,13 @@
 <template>
     <div class="row">
         <div class="col-4">                                                        
-            <select id="drop-down-day" class="form-control" v-model="day">
+            <select id="drop-down-day" class="form-control" v-model="day" @input="updateSelectedDay" >
                 <option value="0">{{$t("day")}}</option>
                 <option v-for="d in getDays" :value="d">{{d}}</option>
             </select>                            
         </div>
         <div class="col-4">                                                        
-            <select id="drop-down-month" class="form-control" v-model="month" @change="fillDays()">
+            <select id="drop-down-month" class="form-control" v-model="month" @change="fillDays" @input="updateSelectedMonth" >
                 <option value="0">{{$t("month")}}</option>
                 <option value="1"> {{$t("monthList.january")}} </option>
                 <option value="2">{{$t("monthList.february")}}</option>
@@ -24,7 +24,8 @@
             </select>                            
         </div>
         <div class="col-4">                                                        
-            <select id="drop-down-year" class="form-control" v-model="year">
+            <select id="drop-down-year" class="form-control" v-model="year" @input="updateSelectedYear" >
+                <option value="0">{{$t("year")}}</option>
                 <option v-for="y in getYears" :value="y"> {{y}} </option>
             </select>                            
         </div>
@@ -40,11 +41,12 @@ export default {
   name: "date-drop-down",
   data() {
     return {
-      year: 1900,
-      month: 1,
+      year: 0,
+      month: 0,
       day: 0
     };
   },
+  props: ["value"],
   computed: {
     getDays() {
       return new Date(this.year, this.month, 0).getDate();
@@ -60,6 +62,26 @@ export default {
   methods: {
     fillDays() {
       this.getDays;
+    },
+    updateSelectedYear(event) {
+      this.year = event.target.value;
+      this.emitDateEvent();
+    },
+    updateSelectedMonth(event) {
+      this.month = event.target.value;
+      this.emitDateEvent();
+    },
+    updateSelectedDay(event) {
+      this.day = event.target.value;
+      this.emitDateEvent();
+    },
+    emitDateEvent() {
+      if (this.year > 0 && this.month > 0 && this.day > 0) {
+        debugger;
+        let dateObj = new Date(`${this.year}-${this.month}-${this.day}`);
+        let date = dateObj.toDateString();        
+        this.$emit("input", date);
+      }
     }
   }
 };
