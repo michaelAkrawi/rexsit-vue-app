@@ -17,21 +17,43 @@ import { userService } from "./services/users-service.js";
 import { getAuthUser, authHeader } from "./scripts/auth";
 import { store } from "./scripts/store.js";
 
+let refreshTokenPromise;
+function getRefreshedToken() {
+  if (!refreshTokenPromise) {
+    refreshTokenPromise = userService.refresh();
+    refreshTokenPromise.then(
+      resetRefreshTokenPromise,
+      resetRefreshTokenPromise
+    );
+  }
+
+  return refreshTokenPromise;
+}
+
+function resetRefreshTokenPromise() {
+  refreshTokenPromise = null;
+}
+
 Axios.create({
   transformRequest: [data => (isString(data) ? data : qs.stringify(data))]
 });
 
 Axios.interceptors.response.use(null, error => {
   if (error.config && error.response && error.response.status === 401) {
-    return userService.refresh().then(response => {
-      store.dispatch("login", response.data);
-      error.config.headers = authHeader();
-      return Axios.request(error.config);
+    return getRefreshedToken().then(response => {
+      debugger;
+      store.dispatch("refresh", response.data).then(response => {
+        debugger;
+        error.config.headers = authHeader();
+        return Axios.request(error.config);
+      });
     });
   }
 
   return Promise.reject(error);
 });
+
+async function refreshToken() {}
 
 export default {
   name: "app",
