@@ -6,8 +6,9 @@ import { authHeader, getAuthUser } from '../scripts/auth.js';
 export const userService = {
     register,
     login,
-    getById,
-    refresh
+    get,
+    refresh,
+    updatePersonalInfo
 }
 
 const requestOptions = {
@@ -43,7 +44,7 @@ function login(user) {
 function register(user) {
 
     return new Promise((resolve, reject) => {
-       
+
 
         axios.post(`${config.apiURL}/authentication/user/register`, JSON.stringify(user), requestOptions)
             .then(function (response) {
@@ -57,10 +58,10 @@ function register(user) {
 
 
 
-function getById(id) {
+function get() {
     return new Promise((resolve, reject) => {
-
-        axios.get(`${config.apiURL}/user/${id}`, {
+        debugger;
+        axios.get(`${config.apiURL}/user/get`, {
             headers: authHeader()
         }).then(response => {
             resolve(response);
@@ -70,14 +71,26 @@ function getById(id) {
     })
 }
 
-function refresh() {    
+async function refresh() {
     const user = getAuthUser();
     return new Promise((resolve, reject) => {
         axios.post(`${config.apiURL}/authentication/user/refresh`, JSON.stringify(user), requestOptions)
-            .then(response => { 
+            .then(response => {
                 resolve(response);
             })
-            .catch(error => { 
+            .catch(error => {
+                reject(error);
+            })
+    })
+}
+
+function updatePersonalInfo(profileInfo) {
+    return new Promise((resolve, reject) => {
+        axios.put(`${config.apiURL}/user/PutPersonlInfo`, JSON.stringify(profileInfo), { headers: authHeader() })
+            .then(response => {
+                resolve(response);
+            })
+            .catch(error => {
                 reject(error);
             })
     })
