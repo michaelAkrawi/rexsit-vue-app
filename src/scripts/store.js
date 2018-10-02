@@ -1,4 +1,4 @@
-import { Login, LoginSuccsess, Logout, LoadProfileImage } from "./mutation-types.js";
+import { Login, LoginSuccsess, Logout, LoadProfileImage, RefreshUserToken } from "./mutation-types.js";
 import { getAuthUser } from './auth.js';
 import { getFBProfilePicture } from './facebook.js'
 import Vue from 'vue'
@@ -30,13 +30,17 @@ export const store = new Vuex.Store({
         },
         [LoadProfileImage](state, url) {
             state.profileImageURL = url;
+        },
+        [RefreshUserToken](state) {
+            state.isLoggedIn = true;
         }
 
     },
     actions: {
-        async login({ dispatch, commit }, user) {            
+        async login({ dispatch, commit }, user) {
+            debugger;
             commit(Login);
-            await dispatch('loadProfileImage', user);            
+            await dispatch('loadProfileImage', user);
             return new Promise(resolve => {
                 commit(LoginSuccsess);
                 localStorage.setItem('user', JSON.stringify(user));
@@ -49,13 +53,26 @@ export const store = new Vuex.Store({
         },
         loadProfileImage(context, user) {
             return new Promise((resolve => {
-                getFBProfilePicture(user.OAuthUniqueId).then(response =>{
+                getFBProfilePicture(user.OAuthUniqueId).then(response => {
                     context.commit(LoadProfileImage, response.data.url);
-                    user.profileImageURL = response.data.url;                    
+                    user.profileImageURL = response.data.url;
                     resolve();
                 });
-                
+
             }))
+        },
+        refresh(context, user) {
+            return new Promise((resolve, reject) => {
+                try {
+                    context.commit(RefreshUserToken);
+                    localStorage.setItem('user', JSON.stringify(user));
+                    debugger;
+                    resolve();
+                }
+                catch (error) {
+                    reject(error);
+                }
+            });
         }
     }
 
