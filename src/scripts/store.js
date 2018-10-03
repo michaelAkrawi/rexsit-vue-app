@@ -53,7 +53,7 @@ export const store = new Vuex.Store({
         },
         loadProfileImage(context, user) {
             return new Promise((resolve => {
-                getFBProfilePicture(user.OAuthUniqueId).then(response => {
+                getFBProfilePicture(user.oAuthUniqueId).then(response => {
                     context.commit(LoadProfileImage, response.data.url);
                     user.profileImageURL = response.data.url;
                     resolve();

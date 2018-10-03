@@ -23,7 +23,7 @@
                           <label for="drop-down-cities">{{$t("city")}}</label>
                           <select id="drop-down-cities" class="form-control" v-model="profile.cityID">
                             <option disabled value="0"> {{$t("city")}} </option>
-                            <option v-for="c in cities" :value="c.ID"> {{c.Name.trim()}} </option>
+                            <option v-for="c in cities" :value="c.id"> {{c.name.trim()}} </option>
                           </select>
                         </div>
                         <div class="form-group">
@@ -159,8 +159,10 @@ export default {
         .get()
         .then(response => {
           if (response.data) {
-            vm.profile.firstName = response.data.FirstName;
-            vm.profile.lastName = response.data.LastName;
+            vm.profile.firstName = response.data.firstName;
+            vm.profile.lastName = response.data.lastName;
+            vm.cityID = response.data.cityId;
+            vm.address = response.data.address;
           }
         })
         .catch(error => {
