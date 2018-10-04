@@ -27,7 +27,7 @@
             </div>
              <div class="form-group">
                 <label for="txb-password"> {{$t("password")}} </label>
-                <vue-password  :class="{'password-control-error': validation.hasError('userData.password')}"  v-model="userData.passwordText" dir="ltr"> </vue-password>
+                <vue-password  :class="{'password-control-error': validation.hasError('userData.password')}"  v-model="userData.password" dir="ltr"> </vue-password>
                 <div class="error-message">{{ validation.firstError('userData.password') }}</div>
             </div>                    
             <div>
@@ -90,7 +90,7 @@ export default {
       userService
         .register(user)
         .then(response => {
-          this.$store.dispatch("login", user).then(resolve => {
+          this.$store.dispatch("login", response.data).then(resolve => {
             this.$router.push({
               path: `/`
             });
@@ -117,7 +117,7 @@ export default {
         .required()
         .email();
     },
-    "userData.passwordText": function(value) {
+    "userData.password": function(value) {
       return Validator.value(value).required();
     }
   }
