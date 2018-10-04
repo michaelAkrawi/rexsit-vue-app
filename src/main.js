@@ -59,7 +59,7 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicRoutes.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (!loggedIn && authRequired) {
-    return next('/login')
+    return next('/');
   }
   if ((to.path == '/login' || to.path == '/signup') && loggedIn) {
     return next('/');
