@@ -20,7 +20,7 @@ export const User = {
     firstName: '',
     lastName: '',
     email: '',
-    passwordText: '',
+    password: '',
     oAuthProvider: '',
     oAuthUniqueId: undefined
 }
@@ -32,7 +32,7 @@ function login(user) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
-            .then(response => {
+            .then(response => {                
                 resolve(response);
             })
             .catch(error => {
@@ -42,12 +42,10 @@ function login(user) {
 }
 
 function register(user) {
-
-    return new Promise((resolve, reject) => {
-
-
+    
+    return new Promise((resolve, reject) => {        
         axios.post(`${config.apiURL}/authentication/user/register`, JSON.stringify(user), requestOptions)
-            .then(function (response) {
+            .then(function (response) {                
                 resolve(response);
             })
             .catch(error => {
