@@ -161,8 +161,8 @@ export default {
           if (response.data) {
             vm.profile.firstName = response.data.firstName;
             vm.profile.lastName = response.data.lastName;
-            vm.cityID = response.data.cityID;
-            vm.address = response.data.address;
+            vm.profile.cityID = response.data.cityID;
+            vm.profile.address = response.data.address;
           }
         })
         .catch(error => {
