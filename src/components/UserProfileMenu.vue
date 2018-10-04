@@ -15,7 +15,7 @@
                 </li>        
                 <li>
                     <i class="fas fa-power-off"></i>
-                    <a @click="logout"> {{$t("logout")}}</a>
+                    <a @click="logout">{{$t("logout")}}</a>
                 </li>    
             </ul>        
         </div>
@@ -42,6 +42,7 @@ export default {
     },
     logout() {
       this.$store.dispatch("logout").then(resolve => {});
+      this.$router.push({ path: "/" });
     }
   }
 };
@@ -82,12 +83,11 @@ export default {
   display: inline-block;
   position: absolute;
   top: -6px;
-  left:  16px;
+  left: 16px;
 }
 
 #profile-menu-items > li {
   position: relative;
-  
 }
 
 #profile-menu-items > li > svg {
@@ -107,7 +107,7 @@ export default {
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 #profile-menu-items > li:hover {
