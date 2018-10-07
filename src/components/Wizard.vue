@@ -23,8 +23,6 @@
   overflow: hidden;
   text-align: center;
 }
-
-
 </style>
 
 <script>
@@ -40,7 +38,7 @@ export default {
         return [{}];
       }
     },
-    onNextButtonClicked : undefined
+    onNextButtonClicked: undefined
   },
   computed: {
     showNextButton() {
@@ -56,9 +54,10 @@ export default {
   methods: {
     onNextClick() {
       const index = this.getCurrentActiveStepIndex();
-      this.onNextButtonClicked(this.steps[index]);
-      this.steps[index].active = false;
-      this.steps[index + 1].active = true;
+      this.onNextButtonClicked(this.steps[index]).then(resolve => {
+        this.steps[index].active = false;
+        this.steps[index + 1].active = true;
+      });
     },
     onPrevClick() {
       const index = this.getCurrentActiveStepIndex();

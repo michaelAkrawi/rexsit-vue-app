@@ -32,7 +32,8 @@
                         </div>                             
                         <div class="form-group">
                           <label for="txb-phone">{{$t("telephone")}}</label>
-                          <input type="tel" id="txb-phone"  class="form-control"/>
+                          <input type="tel" id="txb-phone"  class="form-control" v-model="profile.cellPhone" :class="{'form-control-has-error': validation.hasError('profile.cellPhone')}"/>
+                            <div class="error-message">{{ validation.firstError('profile.cellPhone') }}</div>
                         </div>
                         <div class="row">
                           <div class="col-6">
@@ -104,6 +105,8 @@ import DateDropDown from "../components/DateDropDown.vue";
 import { apihelper } from "../scripts/apihelper.js";
 import { userService } from "../services/users-service";
 import { getAuthUser } from "../scripts/auth";
+import SimpleVueValidation from "simple-vue-validator";
+const validator = SimpleVueValidation.Validator;
 
 export default {
   name: "app",
@@ -135,7 +138,8 @@ export default {
         lastName: "",
         cityID: 0,
         address: "",
-        birthDate: ""
+        birthDate: "",
+        cellPhone: ""
       },
       profileImage: getAuthUser().profileImageURL
     };
@@ -170,6 +174,16 @@ export default {
         });
     },
     onWizardNextStep(step) {
+      return new Promise((resolve, reject) => {
+        this.$validate().then(succ => {
+          if (succ) {
+            this.callStepFunction(step);
+            resolve();
+          }
+        });
+      });
+    },
+    callStepFunction(step) {
       if (step.name == "details") {
         this.savePersonalInfo();
       }
@@ -178,6 +192,11 @@ export default {
       userService.updatePersonalInfo(this.profile).catch(error => {
         console.log(error);
       });
+    }
+  },
+  validators: {
+    "profile.cellPhone": function(value) {
+      return validator.value(value).integer();      
     }
   },
   created() {

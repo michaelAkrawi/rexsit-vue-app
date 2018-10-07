@@ -38,7 +38,6 @@ export const store = new Vuex.Store({
     },
     actions: {
         async login({ dispatch, commit }, user) {
-            debugger;
             commit(Login);
             await dispatch('loadProfileImage', user);
             return new Promise(resolve => {
@@ -72,7 +71,6 @@ export const store = new Vuex.Store({
                 try {
                     context.commit(RefreshUserToken);
                     localStorage.setItem('user', JSON.stringify(user));
-                    debugger;
                     resolve();
                 }
                 catch (error) {

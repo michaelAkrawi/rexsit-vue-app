@@ -57,8 +57,7 @@ function register(user) {
 
 
 function get() {
-    return new Promise((resolve, reject) => {
-        debugger;
+    return new Promise((resolve, reject) => {       
         axios.get(`${config.apiURL}/user/get`, {
             headers: authHeader()
         }).then(response => {
@@ -76,7 +75,7 @@ async function refresh() {
             .then(response => {
                 resolve(response);
             })
-            .catch(error => {
+            .catch(error => {              
                 reject(error);
             })
     })

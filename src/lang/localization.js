@@ -64,6 +64,7 @@ export const messages = {
 export const errors = {
     he: {
         required: 'שדה חובה',
-        email: 'כתובת הדוא\"ל שהוזנה אינה חוקית'
+        email: 'כתובת הדוא\"ל שהוזנה אינה חוקית',
+        integer: 'יש להזין מספרים בלבד'
     }
 }

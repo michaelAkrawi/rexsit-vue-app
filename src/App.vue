@@ -41,9 +41,7 @@ Axios.create({
 Axios.interceptors.response.use(null, error => {
   if (error.config && error.response && error.response.status === 401) {
     return getRefreshedToken().then(response => {
-      debugger;
       store.dispatch("refresh", response.data).then(response => {
-        debugger;
         error.config.headers = authHeader();
         return Axios.request(error.config);
       });
@@ -88,5 +86,15 @@ body {
 .container {
   margin-top: 15px;
   text-align: right;
+}
+
+.error-message {
+  color: #a94442;
+}
+
+.form-control-has-error {
+  box-shadow: none;
+  border-color: #a94442;
+  -webkit-box-shadow: 0 0 0 30px white inset;
 }
 </style>
