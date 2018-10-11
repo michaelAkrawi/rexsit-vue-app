@@ -46,7 +46,7 @@ export default {
       day: 0
     };
   },
-  props: ["value"],
+  props: ["value", "selectedDate"],
   computed: {
     getDays() {
       return new Date(this.year, this.month, 0).getDate();
@@ -79,10 +79,22 @@ export default {
       if (this.year > 0 && this.month > 0 && this.day > 0) {
         debugger;
         let dateObj = new Date(`${this.year}-${this.month}-${this.day}`);
-        let date = dateObj.toDateString();        
+        let date = dateObj.toDateString();
         this.$emit("input", date);
       }
     }
+  },
+  watch: {
+    selectedDate : function(){
+      let date = new Date(this.selectedDate);
+      this.day = date.getDate();
+      this.month = date.getMonth() + 1;
+      this.year = date.getFullYear();
+    }
+  },
+
+  mounted() {
+  
   }
 };
 </script>
