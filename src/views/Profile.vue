@@ -5,6 +5,23 @@
             <wizard :steps="steps" :on-next-button-clicked="onWizardNextStep">
                 <wizard-step slot="details">
                     <form>
+                      <div class="row margin-bottom-x20">
+                          <div class="col-6">                            
+                             <div>
+                               <h4> תמונת הפרופיל שלך</h4>
+                                <p class="text-muted">
+                                  מומלץ מאוד להוסיף תמונת פרופיל על מנת שהמשתמשים באתר יוכלו לזהות אותך
+                                </p>
+                               <button id="btn-upload-image" class="btn-secondary" type="button">
+                                 {{$t("uploadImage")}}
+                                 <i class="fas fa-camera"></i>
+                               </button>
+                             </div>
+                          </div>
+                          <div v-if="showProfileImage" class="col-6">
+                              <img :src="profile.profileImageURL" class="large-profile-image">
+                          </div>
+                      </div>
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group">
@@ -32,29 +49,21 @@
                         </div>                             
                         <div class="form-group">
                           <label for="txb-phone">{{$t("telephone")}}</label>
-                          <input type="tel" id="txb-phone"  class="form-control" v-model="profile.cellPhone" :class="{'form-control-has-error': validation.hasError('profile.cellPhone')}"/>
-                            <div class="error-message">{{ validation.firstError('profile.cellPhone') }}</div>
+                          <input type="tel" id="txb-phone"  class="form-control" v-model="profile.cellPhoneNumber" :class="{'form-control-has-error': validation.hasError('profile.cellPhoneNumber')}"/>
+                            <div class="error-message">{{ validation.firstError('profile.cellPhoneNumber') }}</div>
                         </div>
-                        <div class="row">
-                          <div class="col-6">
-                            <label> {{$t("profileImage")}} </label>
-                             <div>
-                               <input type="button" value="Upload image">
-                             </div>
-                          </div>
-                          <div class="col-6">
-                              <img :src="profileImage">
-                          </div>
-                        </div>
+                        
                         <div class="row">
                           <div class="col-12">
                             <label for="">{{$t("birthdate")}}</label>
                           </div>
                         </div>
-                        <date-drop-down v-model="profile.birthDate"></date-drop-down>             
+                        <date-drop-down v-model="profile.birthDate" :selected-date="profile.birthDate"></date-drop-down>             
                       </form>
                   </wizard-step>
                   <wizard-step slot="dogs">                    
+                    
+                    
                     <div class="form-group">
                         <label for="txb-dog-name">{{$t("dogName")}}</label>
                         <input type="text" id="txb-dog-name" class="form-control">                        
@@ -82,6 +91,11 @@
                         
                       </div>
                     </div>
+                    <div class="text-center margin-top-x30">
+                      <button id='btn-add-dog' class="btn btn-secondary" @click="addNewDog"> {{$t("addNewDog")}}
+                        <i class="fas fa-bone"></i>
+                      </button>
+                    </div>
                   </wizard-step>
               </wizard>
           </div>
@@ -92,6 +106,10 @@
 <style scoped>
 label {
   font-weight: 600;
+}
+.large-profile-image {
+  width: 250px;
+  height: 250px;
 }
 </style>
 
@@ -106,6 +124,7 @@ import { apihelper } from "../scripts/apihelper.js";
 import { userService } from "../services/users-service";
 import { getAuthUser } from "../scripts/auth";
 import SimpleVueValidation from "simple-vue-validator";
+import { getFBProfilePicture } from "../scripts/facebook.js";
 const validator = SimpleVueValidation.Validator;
 
 export default {
@@ -139,10 +158,20 @@ export default {
         cityID: 0,
         address: "",
         birthDate: "",
-        cellPhone: ""
-      },
-      profileImage: getAuthUser().profileImageURL
+        cellPhoneNumber: "",
+        profileImageURL: ""
+      }
     };
+  },
+
+  computed: {
+    showProfileImage() {
+      let show = this.$store.getters.isFacebooKSDKLoaded;
+      if (show) {
+        this.getProfileImage();
+      }
+      return show;
+    }
   },
   methods: {
     fetchCities() {
@@ -157,7 +186,6 @@ export default {
       });
     },
     fetchUserData() {
-      const loggedUser = getAuthUser();
       var vm = this;
       userService
         .get()
@@ -167,11 +195,21 @@ export default {
             vm.profile.lastName = response.data.lastName;
             vm.profile.cityID = response.data.cityID;
             vm.profile.address = response.data.address;
+            vm.profile.cellPhoneNumber = response.data.cellPhoneNumber;
+            vm.profile.birthDate = response.data.birthDate;
           }
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    getProfileImage: function() {
+      const user = getAuthUser();
+      const vm = this;
+      getFBProfilePicture(user.oAuthUniqueId).then(response => {
+        debugger;
+        vm.profile.profileImageURL = response.data.url;
+      });
     },
     onWizardNextStep(step) {
       return new Promise((resolve, reject) => {
@@ -192,14 +230,15 @@ export default {
       userService.updatePersonalInfo(this.profile).catch(error => {
         console.log(error);
       });
-    }
+    },
+    addNewDog() {}
   },
   validators: {
-    "profile.cellPhone": function(value) {
-      return validator.value(value).integer();      
+    "profile.cellPhoneNumber": function(value) {
+      return validator.value(value).integer();
     }
   },
-  created() {
+  mounted() {
     this.fetchCities();
     this.fetchUserData();
   }

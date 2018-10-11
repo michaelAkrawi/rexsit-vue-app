@@ -1,4 +1,4 @@
-import { Login, LoginSuccsess, Logout, LoadProfileImage, RefreshUserToken } from "./mutation-types.js";
+import { Login, LoginSuccsess, Logout, LoadProfileImage, RefreshUserToken, FacebookSDKLoad } from "./mutation-types.js";
 import { getAuthUser } from './auth.js';
 import { getFBProfilePicture } from './facebook.js'
 import Vue from 'vue'
@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         isLoggedIn: getAuthUser() !== null,
-        profileImageURL: getAuthUser() !== null ? getAuthUser().profileImageURL : ''
+        profileImageURL: getAuthUser() !== null ? getAuthUser().profileImageURL : '',
+        facebookSKDLoaded : false
     },
     getters: {
         isLoggedIn(state) {
@@ -16,6 +17,9 @@ export const store = new Vuex.Store({
         },
         profileImageURL(state) {
             return state.profileImageURL;
+        },
+        isFacebooKSDKLoaded (state){
+            return state.facebookSKDLoaded;
         }
     },
     mutations: {
@@ -33,6 +37,9 @@ export const store = new Vuex.Store({
         },
         [RefreshUserToken](state) {
             state.isLoggedIn = true;
+        },
+        [FacebookSDKLoad](state){
+            state.facebookSKDLoaded = true;
         }
 
     },
@@ -52,7 +59,6 @@ export const store = new Vuex.Store({
         },
         loadProfileImage(context, user) {
 
-
             return new Promise((resolve => {
                 if (user.oAuthUniqueId !== null) {
                     getFBProfilePicture(user.oAuthUniqueId).then(response => {
@@ -61,23 +67,24 @@ export const store = new Vuex.Store({
                         resolve();
                     });
                 }
-                else{
-                    resolve();
-                }            
+                else {
+
+                }
             }))
         },
-        refresh(context, user) {
-            return new Promise((resolve, reject) => {
-                try {
-                    context.commit(RefreshUserToken);
-                    localStorage.setItem('user', JSON.stringify(user));
-                    resolve();
-                }
-                catch (error) {
-                    reject(error);
-                }
-            });
+        async refresh({ dispatch, commit }, user) {
+            commit(RefreshUserToken);
+            await dispatch('loadProfileImage', user);
+            return new Promise(resolve => {
+                localStorage.setItem('user', JSON.stringify(user));
+                resolve();
+            })
+        },
+        loadFBSDK(context){
+            context.commit(FacebookSDKLoad);
         }
+
     }
+
 
 })
