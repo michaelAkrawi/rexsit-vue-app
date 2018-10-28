@@ -54,7 +54,18 @@ export const messages = {
         ageByYears : 'גיל (שנים)',
         ageByMonths : 'גיל (חודשים)',
         male : 'זכר',
-        female : 'נקבה'
+        female : 'נקבה', 
+        addNewDog: 'הוספת פרטי כלב',
+        uploadImage : 'העלאת תמונה',
+        dogBreed : 'סוג הכלב',
+        servicesAndRates: 'שירותים ותעריפים',
+        sex : 'מין',
+        yourProfilePhoto: 'תמונת הפרופיל שלך',
+        profilePhotoDescription : 'מומלץ מאוד להוסיף תמונת פרופיל על מנת שהמשתמשים באתר יוכלו לזהות אותך.',
+        iAmDogOwner : 'יש לי כלב',
+        iAmNotDogOwner : 'אין לי כלב',
+        other : 'אחר'
+        
 
 
     }

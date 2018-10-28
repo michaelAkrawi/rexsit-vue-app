@@ -1,6 +1,6 @@
 <template>
     <div class="radio-select-container">
-        <input :id="id" type="radio" :name="name" :value="label" @input="setRadioState" >
+        <input :id="id" type="radio" :name="name" :value="label" @input="setRadioState" :checked="checked" >
         <div class="radio-state" :class="skin">
             <i v-if="skin == 'primary'" class="fas fa-check"></i>
             <i v-if="skin == 'danger'" class="fas fa-times"></i>
@@ -24,10 +24,10 @@
   display: block;
   background-color: #fff;
   border: 1px solid #ccc;
-  text-align: center;
   position: relative;
   cursor: pointer;
   padding: 15px;
+  text-align: center;
 }
 
 .radio-select-container .radio-state {
@@ -83,7 +83,7 @@
 <script>
 export default {
   name: "radio-select",
-  props: ["value", "id", "name", "label", "skin"],
+  props: ["value", "id", "name", "label", "skin", "checked"],
   methods: {
     setRadioState() {
       this.$emit("input", this.label);

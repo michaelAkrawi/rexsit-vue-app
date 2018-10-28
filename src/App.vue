@@ -56,11 +56,9 @@ export default {
     "nav-bar": NavigationBar
   },
   beforeCreate() {
-    const vm= this;
+    const vm = this;
     loadFbSdk(config.facebookAppID, "v3.1", function() {
-      vm.$store.dispatch('loadFBSDK').then(response => {
-        
-      });
+      vm.$store.dispatch("loadFBSDK").then(response => {});
     });
   }
 };
@@ -99,6 +97,8 @@ body {
   border-color: #a94442;
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
+
+
 
 .margin-bottom-x20 {
   margin-bottom: 20px;

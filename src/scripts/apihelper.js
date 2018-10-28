@@ -3,19 +3,29 @@ import config from 'config';
 
 export class apihelper {
 
-    static fetchCities(query, callback) {       
+    static fetchCities(query, callback) {
         axios.get(`${config.apiURL}/city/${query}`)
-            .then(response => { 
+            .then(response => {
                 callback(null, response.data)
             })
-            .catch(error => { 
+            .catch(error => {
                 callback(error, null);
             });
-
-
     }
+
+    static fetchDogBreeds() {
+        return new Promise((resolve, reject) => {
+            axios.get(`${config.apiURL}/dog/GetDogBreeds`).then(response => {
+                resolve(response.data);
+            }).catch(error => {              
+                reject(error);
+            })
+
+        })
+    }
+}
 
     
 
 
-}           
+       
