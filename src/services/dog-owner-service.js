@@ -9,25 +9,27 @@ export const dogOwnerService = {
     getDogInfo
 }
 
-function updateDogInfo(dogOwner) {
-    return new Promise((resolve, reject) => {
-        axios.post(`${config.apiURL}/dog/UpdateDogs`, JSON.stringify(dogOwner), { headers: authHeader() })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
-                reject(error);
-            })
-    })
-}
 
 function getDogInfo() {
     return new Promise((resolve, reject) => {
-        axios.get(`${config.apiURL}/dog/GetDogOwner`, { headers : authHeader() })
+        axios.get(`${config.apiURL}/dogs/GetDogOwner`, { headers: authHeader() })
             .then(response => {
                 resolve(response.data);
             }).catch(error => {
                 reject(error);
             })
+    })
+}
+
+function updateDogInfo(dogOwner) {    
+    return new Promise((resolve, reject) => {
+        axios.post(`${config.apiURL}/dogs/UpdateDogs`, JSON.stringify(dogOwner), { headers: authHeader() }, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => {          
+            resolve(response.data);
+        }).catch(error => {            
+            reject(error);
+        })
     })
 }

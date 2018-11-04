@@ -126,19 +126,67 @@
                               <div class="error-message"> {{validation.firstError('dogs.sex')}} </div>
                             </div>
                         </div>                        
-                      </div>
-                  
-               
+                      </div>                                 
                     </div>
-                  </wizard-step slot="services">
+                  </wizard-step>
                     
-                  <wizard-step>
-                    <div class="row">
-                      <div class="col-6">
-                          <p class="muted-text">                          
-                          </p>
-                      </div>
-                    </div>
+                  <wizard-step slot="services">
+                     <div class="form-group form-check">
+                       <checkbox-vue v-model="services.dogWalker.active" id="chk-dog-walker" :checked="isDogWalker">{{$t("dogWalker")}}</checkbox-vue>
+                     </div>
+                     <p class="text-muted">
+                       {{$t("dogWalkerServiceDescription")}}
+                     </p>
+                     <div class="form-group">
+                        <label  for="drop-rate-per-walk"> {{$t("ratePerWalk")}} </label>
+                        <select id="drop-rate-per-walk" v-model="services.dogWalker.rate" class="form-control">
+                          <option value="20"> &#8362;20 </option>
+                          <option value="25"> &#8362;25 </option>
+                          <option value="30"> &#8362;30 </option>
+                          <option value="35"> &#8362;35 </option>
+                          <option value="40"> &#8362;40 </option>
+                          <option value="50"> &#8362;50 </option>
+                          <option value="60"> &#8362;60 </option>
+                          <option value="70"> &#8362;70 </option>
+                          <option value="80"> &#8362;80 </option>
+                          <option value="90"> &#8362;90 </option>
+                          <option value="100"> &#8362;100 </option>
+                        </select>
+                     </div>
+                     <div class="form-group from-check">
+                       <checkbox-vue id="chk-dog-sitter" v-model="services.dogSitter.active" :checked="isDogSitter"> {{$t("dogSitter")}}  </checkbox-vue>
+                     </div>
+                     <p class="text-muted"> {{$t("dogSitterDescription")}} </p>
+                     <div class="form-group">
+                       <label for="drop-rate-per-day">{{$t("ratePerDay")}}</label>
+                       <select id="drop-rate-per-day" v-model="services.dogSitter.rate" class="form-control">
+                          <option value="50"> &#8362;50 </option>
+                          <option value="60"> &#8362;60 </option>
+                          <option value="70"> &#8362;70 </option>
+                          <option value="80"> &#8362;80 </option>
+                          <option value="90"> &#8362;90 </option>
+                          <option value="110"> &#8362;110 </option>
+                          <option value="115"> &#8362;115 </option>
+                          <option value="120"> &#8362;120 </option>
+                          <option value="125"> &#8362;125 </option>
+                          <option value="130"> &#8362;130 </option>
+                       </select>
+                     </div>
+                     <div class="form-group">
+                       <label for=""> {{$t("ratePerAdditionalDog")}} </label>
+                       <select id="drop-for-additional-dog" v-model="services.dogSitter.additionalDogRate" class="form-control">
+                          <option value="15"> &#8362;15 </option>
+                          <option value="20"> &#8362;20 </option>
+                          <option value="25"> &#8362;25 </option>
+                          <option value="30"> &#8362;30 </option>
+                          <option value="40"> &#8362;40 </option>
+                          <option value="50"> &#8362;50 </option>
+                          <option value="60"> &#8362;60 </option>
+                          <option value="70"> &#8362;70 </option>
+                          <option value="80"> &#8362;80 </option>
+                          <option value="90"> &#8362;90 </option>
+                       </select>
+                     </div>
                   </wizard-step>
               </wizard>
           </div>
@@ -172,6 +220,8 @@ import RadioSelect from "../components/RadioSelect.vue";
 import { apihelper } from "../scripts/apihelper.js";
 import { userService } from "../services/users-service";
 import { dogOwnerService } from "../services/dog-owner-service.js";
+import { dogWalkersService } from "../services/dog-walker-service.js";
+import { dogSitterService } from "../services/dog-sitter-service.js";
 import { getAuthUser } from "../scripts/auth";
 import SimpleVueValidation from "simple-vue-validator";
 import { getFBProfilePicture } from "../scripts/facebook.js";
@@ -224,10 +274,21 @@ export default {
       dogs: {
         dogName: "",
         breedID: 0,
-        ageMonths: undefined,
+        ageMonths: null,
         ageYears: null,
         sex: null,
         radioButtonValue: ""
+      },
+      services: {
+        dogWalker: {
+          active: false,
+          rate: 20
+        },
+        dogSitter: {
+          active: false,
+          rate: 50,
+          additionalDogRate: 15
+        }
       }
     };
   },
@@ -245,6 +306,12 @@ export default {
     },
     userDontOwnsADog() {
       return this.dogs.radioButtonValue == "i-am-not-dog-owner";
+    },
+    isDogWalker() {
+      return this.services.dogWalker.active;
+    },
+    isDogSitter() {
+      return this.services.dogSitter.active;
     }
   },
   methods: {
@@ -313,6 +380,31 @@ export default {
           console.log(error);
         });
     },
+    fetchDogWalkerData() {
+      var vm = this;
+      dogWalkersService
+        .get()
+        .then(response => {
+          vm.services.dogWalker.active = true;
+          vm.services.dogWalker.rate = response.rate;
+        })
+        .catch(error => {});
+    },
+    fetchDogSitterData() {
+      var vm = this;
+      dogSitterService
+        .get()
+        .then(response => {
+          vm.services.dogSitter.active = true;
+          vm.services.dogSitter.rate = response.rate;
+          vm.services.dogSitter.additionalDogRate = response.additionalDogRate;
+        })
+        .catch(error => {
+          if (error.response.statusCode == "404") {
+            vm.services.dogSitter.active = false;
+          }
+        });
+    },
     getProfileImage: function() {
       const user = getAuthUser();
       const vm = this;
@@ -339,6 +431,8 @@ export default {
         if (this.profile.dogOwner == true) {
           this.updateDogsInfo();
         }
+      } else if (step.name == "services") {
+        this.updateServices();
       }
     },
     getStepValidators(step) {
@@ -351,7 +445,12 @@ export default {
           ];
         case "dogs": {
           if (this.dogs.radioButtonValue == "i-am-dog-owner")
-            return ["dogs.dogName", "dogs.ageYears", "dogs.sex"];
+            return [
+              "dogs.dogName",
+              "dogs.ageYears",
+              "dogs.sex",
+              "dogs.ageMonths"
+            ];
           else return [];
         }
       }
@@ -364,9 +463,17 @@ export default {
       });
     },
     updateDogsInfo() {
-      userService.updateDogInfo(this.dogs).catch(error => {
+      dogOwnerService.updateDogInfo(this.dogs).catch(error => {
         console.log(error);
       });
+    },
+    updateServices() {
+      if (this.services.dogWalker.active) {
+        dogWalkersService.update(this.services.dogWalker);
+      }
+      if (this.services.dogSitter.active) {        
+        dogSitterService.update(this.services.dogSitter);
+      }
     }
   },
   validators: {
@@ -391,12 +498,20 @@ export default {
     },
     "dogs.sex": function(value) {
       return validator.value(value).required();
+    },
+    "dogs.ageMonths": function(value) {
+      return validator
+        .value(value)
+        .integer()
+        .greaterThan(0);
     }
   },
   mounted() {
     this.fetchCities();
     this.fetchDogBreeds();
     this.fetchUserData();
+    this.fetchDogWalkerData();
+    this.fetchDogSitterData();
   }
 };
 </script>

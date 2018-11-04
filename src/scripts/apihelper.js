@@ -15,7 +15,7 @@ export class apihelper {
 
     static fetchDogBreeds() {
         return new Promise((resolve, reject) => {
-            axios.get(`${config.apiURL}/dog/GetDogBreeds`).then(response => {
+            axios.get(`${config.apiURL}/dogs/GetDogBreeds`).then(response => {
                 resolve(response.data);
             }).catch(error => {              
                 reject(error);
