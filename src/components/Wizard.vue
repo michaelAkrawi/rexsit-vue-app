@@ -5,7 +5,7 @@
             <slot v-for="s in steps" :name="s.name" v-if="s.active"></slot>
         </div>
         <div class="wizard-step-bottom">   
-           <button id="btn-next" @click="onNextClick" class="btn btn-primary" v-show="showNextButton">{{$t("saveAndContinue")}}</button>
+           <button id="btn-next" @click="onNextClick" class="btn btn-primary" >{{$t("saveAndContinue")}}</button>
         </div>
     </div> 
 </template>
@@ -55,8 +55,10 @@ export default {
     onNextClick() {
       const index = this.getCurrentActiveStepIndex();
       this.onNextButtonClicked(this.steps[index]).then(resolve => {
-        this.steps[index].active = false;
-        this.steps[index + 1].active = true;
+        if (index < this.steps.length - 1) {
+          this.steps[index].active = false;
+          this.steps[index + 1].active = true;
+        }
       });
     },
     onPrevClick() {
