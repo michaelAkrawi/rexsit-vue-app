@@ -39,7 +39,7 @@
   background-color: #fff;
   border: 2px solid;
   z-index: 2;
-  left: 44%;
+  right: 0;
   top: -35px;
   text-align: center;
 }
