@@ -2,7 +2,7 @@
     <div class="wizard-progress-bar">                
         <div class="progress-bar-line"></div>        
             <div class="row">               
-                <div v-for="step in steps" :class="['col-4', {'active': step.active}]">
+                <div v-for="step in steps" :class="['col-4 text-center', {'active': step.active}]">
                     <div class="progress-bar-step">
                         <i :class="step.icon"/>                                    
                     </div>
@@ -61,6 +61,7 @@ p {
   font-size: 18px;
   border-radius: 50%;
   text-align: center;
+  display: inline-block;
 }
 
 .active .progress-bar-step {
