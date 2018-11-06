@@ -1,8 +1,12 @@
 <template>
-    <div class="checkbox-container">
-        <input :id="id" type="checkbox" class="form-control" >
-        <i class="fas fa-check"></i>   
-        <label>{{description}}</label>    
+    <div>
+      <div class="checkbox-container">
+        <input :id="id" type="checkbox" v-model="state" class="form-control" @change="updateState($event.target.checked)" :checked="checked" >
+        <i class="fas fa-check"></i>           
+      </div>
+      <div class="label-container">
+        <label :for="id"><slot></slot></label>    
+      </div>
     </div>
     
 </template>
@@ -10,15 +14,15 @@
 <script>
 export default {
   name: "checkbox-vue",
-  props: ["id", "description"],
+  props: ["value", "id", "checked"],
   data() {
     return {
-      checked: false
+      state: this.checked
     };
   },
   methods: {
-    onClick() {
-      this.checked = !this.checked;
+    updateState(value) {
+      this.$emit("input", value);
     }
   }
 };
@@ -33,8 +37,15 @@ export default {
   cursor: pointer;
 }
 
-.checkbox-container label {
-  margin-right: 30px;
+.label-container label {
+  padding-right: 10px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.label-container {
+  display: table-cell;
+  position: relative;  
 }
 
 .checkbox-container {
@@ -44,7 +55,7 @@ export default {
   background-color: #fff;
   width: 25px;
   height: 25px;
-  display: inline-block;
+  display: table-cell;
   position: relative;
 }
 
