@@ -4,8 +4,11 @@ import { authHeader } from '../scripts/auth.js';
 
 export const dogWalkersService = {
     get,
-    update
+    update,
+    remove
 }
+
+
 
 
 function get() {
@@ -20,6 +23,7 @@ function get() {
     })
 }
 
+
 function update(dogWalker) {
     return new Promise((resolve, reject) => {
         axios.post(`${config.apiURL}/DogWalkers/Update`, JSON.stringify(dogWalker), { headers: authHeader() }, {
@@ -27,6 +31,15 @@ function update(dogWalker) {
             headers: { 'Content-Type': 'application/json' }
         })
             .then(response => { resolve(response.data) })
-            .catch(error => {  reject(error); })
+            .catch(error => { reject(error); })
     })
 }
+
+function remove() { 
+    return new Promise((resolve, reject) => {
+        axios.delete(`${config.apiURL}/DogWalkers/Delete`, { headers: authHeader() })
+            .then(response => { resolve(response) })
+            .catch(error => { reject(error) })
+    })
+}
+

@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="checkbox-container">
-        <input :id="id" type="checkbox" v-model="state" class="form-control" @change="updateState($event.target.checked)" :checked="checked" >
+        <input :id="id" type="checkbox"  class="form-control" @change="updateState($event.target.checked)" :checked="checked" >
         <i class="fas fa-check"></i>           
       </div>
       <div class="label-container">

@@ -43,7 +43,7 @@ export function getFBInfo(userID) {
 export function getFBProfilePicture(userID) {
 
     return new Promise(resolve => {
-        window.FB.api(`/${userID}/picture`, 'GET', { redirect: false, width : 250, height: 250 }, response => resolve(response));
+        window.FB.api(`/${userID}/picture`, 'GET', { redirect: false, width : 150, height: 150 }, response => resolve(response));
 
     });
 }

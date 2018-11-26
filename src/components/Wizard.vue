@@ -30,7 +30,7 @@ import WizardProgress from "../components/WizardProgress.vue";
 import { User } from "../services/users-service";
 
 export default {
-  name: "wizard",
+  name: "wizard-vue",
   props: {
     steps: {
       type: Array,

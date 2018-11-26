@@ -14,8 +14,7 @@
 
 <script>
 export default {
-  name: "wizard-step",    
-  props : ['onNextCallbackFunction']
+  name: "wizard-step"  
 };
 </script>
 
