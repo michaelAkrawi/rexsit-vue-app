@@ -136,6 +136,16 @@ export default {
           }
         });
     },
+    onStepCompleted() {
+      return new Promise((resolve, reject) => {
+        this.$validate().then(succ => {
+          if (succ) {
+            this.updateDogsInfo();
+          }
+          resolve(succ);
+        });
+      });
+    },
     updateDogsInfo() {
       dogOwnerService.updateDogInfo(this.dogs).catch(error => {
         console.log(error);
