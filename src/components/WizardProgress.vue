@@ -3,7 +3,7 @@
         <div class="progress-bar-line"></div>        
             <div class="row">               
                 <div v-for="step in steps" :class="['col-4 text-center', {'active': step.active}]">
-                    <div class="progress-bar-step">
+                    <div class="progress-bar-step" @click="onStepClicked(step)">
                         <i :class="step.icon"/>                                    
                     </div>
                     <p>{{step.title}} </p>
@@ -26,6 +26,16 @@ export default {
   computed: {
     isActiveStep(step) {
       return step.active;
+    }
+  },
+  methods: {
+    onStepClicked(step) {
+      let i = this.steps.findIndex(el => {
+        return el.active == true;
+      });
+
+      this.steps[i].active = false;
+      step.active = true;
     }
   }
 };
@@ -62,6 +72,7 @@ p {
   border-radius: 50%;
   text-align: center;
   display: inline-block;
+  cursor: pointer;
 }
 
 .active .progress-bar-step {
