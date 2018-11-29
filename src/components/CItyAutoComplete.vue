@@ -10,7 +10,7 @@
 
         <ul id="city-search-results" v-show="showSearchResults">
           <li v-for="c in cities">
-            <a @click="setSelectedCityText(c.Name)">{{c.Name}}</a>
+            <a @click="setSelectedCityText(c.name)">{{c.name}}</a>
           </li>
         </ul>                                
     </div>                    
@@ -41,7 +41,7 @@ export default {
     this.debouncedGetCity = _.debounce(this.getCity, 500); //use lodash to delay fetch call
   },
   methods: {
-    getCity: function() {
+    getCity: function() {     
       self = this;
       self.showSearchResults = true;
       if (this.inputText != "") {
