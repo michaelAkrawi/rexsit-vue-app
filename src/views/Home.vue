@@ -1,7 +1,11 @@
 <template>
-<div>
-   <search-bar></search-bar>
-   
+<div class="hero-container">
+   <div class="hero-overlay-opaque"></div>
+   <div class="hero-content">
+        <div class="container">
+            <search-bar></search-bar>   
+        </div>
+   </div>
 </div>
 
 </template>
@@ -19,19 +23,23 @@ export default {
 
 
 <style scoped>
-header {
-  background-image: url("../assets/hero_dog_blur.jpg");
-  height: 500px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 35% 75%;
-}
-
 header .navbar {
   border: none;
   background: transparent;
   box-shadow: none;
 }
+
+.hero-container {
+  background-image: url("../assets/hero_dog_blur.jpg");
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  margin-top: -80px;
+  padding-top: 210px;
+  min-height: 774px;
+}
+
 
 </style>
 

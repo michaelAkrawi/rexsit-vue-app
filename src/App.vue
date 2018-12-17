@@ -2,7 +2,7 @@
   <div id="app"  dir="rtl">
    
     <nav-bar></nav-bar>
-    <div class="container">
+    <div>
         <router-view></router-view>
     </div>
   </div>
@@ -69,6 +69,7 @@ body {
   background-color: #f7f7f7;
   color: #333;
   font-size: 14px;
+  text-align: right;
 }
 
 .btn-primary {
@@ -85,7 +86,6 @@ body {
 
 .container {
   margin-top: 15px;
-  text-align: right;
 }
 
 .error-message {
@@ -97,8 +97,6 @@ body {
   border-color: #a94442;
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
-
-
 
 .margin-bottom-x20 {
   margin-bottom: 20px;
@@ -130,3 +128,4 @@ body {
   color: #999;
 }
 </style>
+

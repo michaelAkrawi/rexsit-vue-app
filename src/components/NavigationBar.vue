@@ -1,6 +1,6 @@
 <template>
     <header :class="{'home' : isHomeView}">
-     <div id="navbar" role="nav" :class="[{ 'navbar-transparent': isHomeView }, 'row justify-content-between']">
+     <div id="navbar" role="nav" :class="[{ 'navbar-transparent': isHomeView }, 'row justify-content-between ml-0 mr-0']">
        <div class= "col-2">
           <router-link class="brand-logo" v-bind:to="'/'"> 
               <img class="brand-img" src="../assets/Rexsit-03.png">
@@ -76,13 +76,7 @@ header {
   height: 130px;
 }
 
-header.home {
-  background-image: url("../assets/hero_dog_blur.jpg");
-  height: 500px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 35% 75%;
-}
+
 
 header #navbar {
   background-color: #fff;
