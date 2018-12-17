@@ -4,7 +4,7 @@
         <div class="col-lg-7 col-md-auto">
             <wizard-vue :steps="steps" :on-next-button-clicked="onWizardNextStep">
                 <wizard-step slot="details">
-                    <profile-general-info ref="details"></profile-general-info>
+                    <profile-general-info ref="details" ></profile-general-info>
                   </wizard-step>
                   <wizard-step slot="dogs">                    
                     <profile-dog-info ref="dogs"></profile-dog-info>
@@ -33,9 +33,9 @@ label {
 <script>
 import Wizard from "../components/Wizard.vue";
 import WizardStep from "../components/WizardStep.vue";
-import ProfileGeneralInfo from "../views/ProfileGeneralInfo.vue";
-import ProfileDogInfo from "../views/ProfileDogInfo.vue";
-import ProfileServices from "../views/ProfileServices.vue";
+import ProfileGeneralInfo from "../components/ProfileGeneralInfo.vue";
+import ProfileDogInfo from "../components/ProfileDogInfo.vue";
+import ProfileServices from "../components/ProfileServices.vue";
 
 
 export default {
@@ -68,7 +68,7 @@ export default {
           title: this.$t("servicesAndRates"),
           active: false
         }
-      ]
+      ]     
     };
   },
   methods: {
@@ -79,6 +79,6 @@ export default {
         });
       });
     }
-  }
+  } 
 };
 </script>
