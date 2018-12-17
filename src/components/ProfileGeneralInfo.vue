@@ -68,6 +68,7 @@ import SimpleVueValidation from "simple-vue-validator";
 const validator = SimpleVueValidation.Validator;
 
 export default {
+  props : ['value'],
   name: "profile-general-info",
   data() {
     return {
