@@ -4,7 +4,7 @@ import config from 'config';
 export class apihelper {
 
     static fetchCities(query, callback) {
-        axios.get(`${config.apiURL}/city/${query}`)
+        axios.get(`${config.apiURL}/city/GetCity/${query}`)
             .then(response => {
                 callback(null, response.data)
             })

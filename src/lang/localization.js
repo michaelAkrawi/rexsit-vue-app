@@ -9,7 +9,7 @@ export const messages = {
         firstname: 'שם פרטי',
         lastname: 'שם משפחה',
         login: 'כניסה',
-        dogwallker: 'דוגווקר',
+        dogwalker: 'דוגווקר',
         dogsitter: 'דוגיסיטר',
         services: 'שירותים',
         location: 'מיקום',

@@ -5,8 +5,9 @@ import Home from './views/Home.vue'
 import SignUp from './views/Signup.vue'
 import Login from './views/Login.vue'
 import Profile from './views/Profile.vue'
-import BootstrapVue from 'bootstrap-vue'
+import Search from './views/Search.vue';
 import VueI18n from 'vue-i18n'
+import Buefy from 'buefy'
 import SimpleVueValidation from 'simple-vue-validator';
 import Vuex from 'vuex';
 
@@ -16,6 +17,7 @@ import Vuex from 'vuex';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'buefy/dist/buefy.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import '@fortawesome/fontawesome-free/js/all.js'
 
@@ -30,7 +32,7 @@ SimpleVueValidation.extendTemplates(errors.he);
 
 Vue.use(VueRouter);
 Vue.use(VueI18n);
-Vue.use(BootstrapVue);
+Vue.use(Buefy);
 Vue.use(SimpleVueValidation);
 Vue.use(Vuex);
 
@@ -44,7 +46,8 @@ const routes = [
   { path: '/', component: Home },
   { path: '/signup', component: SignUp },
   { path: '/login', component: Login },
-  { path: '/profile', component: Profile }
+  { path: '/profile', component: Profile },
+  { path: '/search', component: Search }
 
 ];
 
