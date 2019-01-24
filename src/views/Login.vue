@@ -79,8 +79,8 @@ export default {
             this.$router.push("/");
           });
         })
-        .catch(error => {          
-          if (error.response.status == "401") {
+        .catch(error => {                    
+          if (error.response.status == "403") {
             this.wrongCredentials = true;
           } else {
             console.log(error);
