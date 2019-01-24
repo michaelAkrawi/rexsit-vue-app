@@ -1,26 +1,25 @@
 <template>
-    <div>
-       <div id="user-profile-menu">
-            <div @click="toggle">
-                <img :src="getProfileImageURL" class="profile-image" />
-            </div>
-            <ul id="profile-menu-items" role="menu" v-show="visible">
-                <li>
-                    <i class="far fa-user"></i>
-                    <router-link v-bind:to="'/profile'"> {{$t("profile")}} </router-link>
-                </li>
-                <li>
-                    <i class="far fa-envelope"></i>
-                    <router-link v-bind:to="'/inbox'"> {{$t("inbox")}} </router-link>
-                </li>        
-                <li>
-                    <i class="fas fa-power-off"></i>
-                    <a @click="logout">{{$t("logout")}}</a>
-                </li>    
-            </ul>        
-        </div>
+  <div>
+    <div id="user-profile-menu">
+      <div @click="toggle">
+        <img :src="getProfileImageURL" class="profile-image">
+      </div>
+      <ul id="profile-menu-items" role="menu" v-show="visible">
+        <li>
+          <i class="far fa-user"></i>
+          <router-link v-bind:to="'/profile'">{{$t("profile")}}</router-link>
+        </li>
+        <li>
+          <i class="far fa-envelope"></i>
+          <router-link v-bind:to="'/inbox'">{{$t("inbox")}}</router-link>
+        </li>
+        <li>
+          <i class="fas fa-power-off"></i>
+          <a @click="logout">{{$t("logout")}}</a>
+        </li>
+      </ul>
     </div>
-    
+  </div>
 </template>
 
 <script>
@@ -73,6 +72,7 @@ export default {
   padding: 10px 0px;
   min-width: 150px;
   top: 100%;
+  z-index: 2;
 }
 
 #profile-menu-items::after {

@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="col-4">
-      <div class="map"></div>
+      <google-map :addresses="addressess"></google-map>
     </div>
   </div>
 </template>
@@ -19,17 +19,20 @@
 <script>
 import SearchFilters from "../components/SearchFilters.vue";
 import SearchProfile from "../components/SearchProfile.vue";
+import GoogleMap from "../components/GoogleMap.vue";
 import { dogWalkersService } from "../services/dog-walker-service.js";
 
 export default {
   name: "search",
   components: {
     "search-filters": SearchFilters,
-    "search-profile": SearchProfile
+    "search-profile": SearchProfile,
+    "google-map": GoogleMap
   },
   data() {
     return {
-        searchResults : []
+      searchResults: [],
+      addressess: []
     };
   },
   methods: {
@@ -43,12 +46,22 @@ export default {
         .getDogWalkers(query)
         .then(response => {
           this.searchResults = response;
+          this.loadMap();
         })
         .catch(error => {
-            console.log(error);
+          console.log(error);
         });
     },
-    fetchDogSitters() {}
+    fetchDogSitters() {},
+
+    loadMap() {
+      let address = `${this.searchResults[0].profile.address} ${
+        this.searchResults[0].profile.city.name
+      }`;
+
+      this.addressess.push(address);     
+    },
+    loadAddressess() {}
   },
   mounted() {
     this.performSearch();
