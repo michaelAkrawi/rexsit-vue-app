@@ -17,6 +17,7 @@ export const messages = {
         existedUser: 'המייל שהוזן נמצא בשימוש במערכת',
         city: 'עיר',
         date: 'תאריך',
+        dates : 'תאריכים',
         alreadyHaveAccount: 'כבר נרשמתי לאתר',
         forgotPassword: 'שכחתי סיסמא',
         haventSignedUpYet: 'עדיין לא נרשמתי לאתר',
@@ -73,8 +74,11 @@ export const messages = {
         ratePerDay: 'תעריף ליום',
         ratePerAdditionalDog: 'תעריף עבור כלב נוסף',
         done: 'סיום',
-
-
+        currency : '&#8362;',
+        resetPassword : 'איפוס סיסמא',
+        send : 'שלח',
+        resetPasswordTitle :'על מנת לאפס את הסיסמא לחשבון שלך יש להזין את שם כתובת המייל איתה נרשמת לשירות. לאחר מכן ישלח אליך מייל עם פרטים לאיפוס הסיסמא.',
+        emailNotFound : 'הדוא\"ל שהוזן לא נמצא במערכת'
 
     }
 

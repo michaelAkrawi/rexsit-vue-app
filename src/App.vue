@@ -1,15 +1,18 @@
 <template >
-  <div id="app"  dir="rtl">
-   
+  <div id="app" dir="rtl">
     <nav-bar></nav-bar>
     <div>
-        <router-view></router-view>
+      <router-view></router-view>
+    </div>
+    <div>
+        <footer></footer>
     </div>
   </div>
 </template>
 
 <script>
 import NavigationBar from "./components/NavigationBar.vue";
+import AppFooter from './components/AppFooter.vue'
 import { loadFbSdk } from "./scripts/facebook.js";
 import config from "config";
 import Axios from "axios";
@@ -53,7 +56,8 @@ async function refreshToken() {}
 export default {
   name: "app",
   components: {
-    "nav-bar": NavigationBar
+    "nav-bar": NavigationBar,
+    'app-footer' : AppFooter
   },
   beforeCreate() {
     const vm = this;
@@ -65,11 +69,16 @@ export default {
 </script>
 
 <style>
+html{
+  height: 100%;
+}
+
 body {
   background-color: #f7f7f7;
   color: #333;
   font-size: 14px;
   text-align: right;
+  height: 100%;
 }
 
 .btn-primary {

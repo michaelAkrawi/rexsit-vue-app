@@ -1,15 +1,19 @@
 <template>
-  <div class="card card-search-profile">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-4 profile-image"></div>
-        <div class="col-6 profile-info">
-          <h4 class="text-info"></h4>
-          <p></p>
-        </div>
-        <div class="col-2">
-          <div class="text-info rate-text">35</div>
-          <p class="text-muted">תעריף להליכה</p>
+  <div>
+    <div v-for="p in profiles" class="card card-search-profile">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-4 profile-image">
+            <img :src="getProgileImage" >
+          </div>
+          <div class="col-6 profile-info">
+            <h2 class="text-info">{{p.profile.firstName}} {{p.profile.lastName}}</h2>
+            <p>{{p.profile.address}}, {{p.profile.city.name}}</p>
+          </div>
+          <div class="col-2">
+            <div class="text-info rate-text">{{p.rate}} &#8362;</div>
+            <p class="text-muted">{{$t("ratePerWalk")}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -21,23 +25,11 @@ export default {
   name: "search-profile",
   props: {
     profiles: Array
-  },
-  methods: {
-    setupLayout() {
-      this.profiles.forEach(element => {
-        console.log(element);
-      });
+  }, 
+  computed : {
+    getProgileImage (){
+      return this.$store.getters.profileImageURL;
     }
-  },
-  watch: {
-    profiles: function(newArray, oldArray) {
-      if (newArray != undefined && newArray.length > 0) {
-          this.setupLayout();
-      }
-    }
-  },
-  mounted() {
-    this.setupLayout();
   }
 };
 </script>
@@ -53,6 +45,18 @@ export default {
   font-weight: 600;
   font-size: 22px;
 }
+
+.profile-info {
+  font-weight: 600;
+}
 </style>
+
+<style scoped>
+.text-info {
+  font-size: 22px;
+  font-weight: 600;
+}
+</style>
+
 
 

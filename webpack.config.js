@@ -52,8 +52,12 @@ module.exports = {
   },
   externals: {
     config: JSON.stringify({
-      apiURL: 'http://localhost:1942/api',
-      facebookAppID : '211055006431121'
+      // apiURL: 'http://localhost:1942/api',
+      apiURL: 'http://localhost:1942/ahttps://rexsit-web-api.azurewebsites.net/api',
+      facebookAppID : '211055006431121',
+      mapsURL : 'https://maps.googleapis.com/maps/api/staticmap',
+      mapsAppKey : 'AIzaSyCGQFeUA3F7MgyzROhGPqiNAkOpAQVhyMw',
+      locationIQAppKey :'82fc3fc7e92706'
     })
   },
   performance: {

@@ -30,7 +30,7 @@
         </form>
 
         <div class="footer-container top-border">            
-            <router-link v-bind:to="'/'"> {{$t("forgotPassword")}} </router-link>
+            <router-link v-bind:to="'/reset-password'"> {{$t("forgotPassword")}} </router-link>
         </div>
         <div class="footer-container">            
             <router-link v-bind:to="'/signup'"> {{$t("haventSignedUpYet")}} </router-link>
@@ -118,6 +118,8 @@ export default {
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.125);
   background-color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .login-container h2 {

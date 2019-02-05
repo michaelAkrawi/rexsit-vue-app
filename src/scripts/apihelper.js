@@ -4,6 +4,7 @@ import config from 'config';
 export class apihelper {
 
     static fetchCities(query, callback) {
+        debugger;
         axios.get(`${config.apiURL}/city/GetCity/${query}`)
             .then(response => {
                 callback(null, response.data)

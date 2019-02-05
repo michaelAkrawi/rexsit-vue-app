@@ -8,7 +8,8 @@ export const userService = {
     login,
     get,
     refresh,
-    updatePersonalInfo
+    updatePersonalInfo,
+    resetPassword
 }
 
 const requestOptions = {
@@ -32,7 +33,7 @@ function login(user) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
-            .then(response => {                
+            .then(response => {
                 resolve(response);
             })
             .catch(error => {
@@ -42,10 +43,10 @@ function login(user) {
 }
 
 function register(user) {
-    
-    return new Promise((resolve, reject) => {        
+
+    return new Promise((resolve, reject) => {
         axios.post(`${config.apiURL}/authentication/user/register`, JSON.stringify(user), requestOptions)
-            .then(function (response) {                
+            .then(function (response) {
                 resolve(response);
             })
             .catch(error => {
@@ -57,7 +58,7 @@ function register(user) {
 
 
 function get() {
-    return new Promise((resolve, reject) => {       
+    return new Promise((resolve, reject) => {
         axios.get(`${config.apiURL}/user/get`, {
             headers: authHeader()
         }).then(response => {
@@ -75,7 +76,7 @@ async function refresh() {
             .then(response => {
                 resolve(response);
             })
-            .catch(error => {              
+            .catch(error => {
                 reject(error);
             })
     })
@@ -84,6 +85,18 @@ async function refresh() {
 function updatePersonalInfo(profileInfo) {
     return new Promise((resolve, reject) => {
         axios.put(`${config.apiURL}/user/PutPersonlInfo`, JSON.stringify(profileInfo), { headers: authHeader() })
+            .then(response => {
+                resolve(response);
+            })
+            .catch(error => {
+                reject(error);
+            })
+    })
+}
+
+function resetPassword(email) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${config.apiURL}/authentication/user/resetpassword?email=${email}`, null, requestOptions)
             .then(response => {
                 resolve(response);
             })

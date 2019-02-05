@@ -5,7 +5,8 @@ import Home from './views/Home.vue'
 import SignUp from './views/Signup.vue'
 import Login from './views/Login.vue'
 import Profile from './views/Profile.vue'
-import Search from './views/Search.vue';
+import Search from './views/Search.vue'
+import ResetPassword from './views/ResetPassword.vue'
 import VueI18n from 'vue-i18n'
 import Buefy from 'buefy'
 import SimpleVueValidation from 'simple-vue-validator';
@@ -47,7 +48,8 @@ const routes = [
   { path: '/signup', component: SignUp },
   { path: '/login', component: Login },
   { path: '/profile', component: Profile },
-  { path: '/search', component: Search }
+  { path: '/search', component: Search },
+  { path : '/reset-password' , component : ResetPassword}
 
 ];
 
@@ -58,7 +60,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-  const publicRoutes = ['/signup', '/login', '/'];
+  const publicRoutes = ['/signup', '/login', '/', '/reset-password'];
   const authRequired = !publicRoutes.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (!loggedIn && authRequired) {
