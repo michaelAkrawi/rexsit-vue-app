@@ -7,7 +7,7 @@
         <label for="txb-email">{{$t("email")}}</label>
         <input
           type="email"
-          class="form-control"
+          class="form-control" 
           :class="{'form-control-has-error': emailNotFound}"
           id="txb-email"
           v-model="email"
